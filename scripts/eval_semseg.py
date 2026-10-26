@@ -41,6 +41,8 @@ def worker(rank, gpu, files, args, queue):
     C = len(labels)
     for f in files:
         coord, color, gt = load_scene(f)
+        hf = f[:-4] + ".hist.npy"
+        hist = torch.from_numpy(np.load(hf)).cuda().double() if os.path.exists(hf) else None
         np.random.seed(abs(hash(os.path.basename(f))) % 2 ** 31)
         torch.manual_seed(0)
         t0 = time.time()
@@ -53,10 +55,15 @@ def worker(rank, gpu, files, args, queue):
             kw = dict(METHODS[name])
             over = {k: kw.pop(k) for k in ("relay_weight",) if k in kw}
             model.cfg = dataclasses.replace(cfg, **over)
-            pred = model.semantic(props, labels, **kw).argmax(1)[v]
-            out[name] = torch.bincount(pred * C + g, minlength=C * C).view(C, C).cpu().numpy()
+            pred = model.semantic(props, labels, **kw).argmax(1)
+            if hist is not None:  # score every raw point with its voxel's prediction
+                out[name] = torch.zeros(C, C, dtype=torch.float64, device="cuda").index_add_(0, pred, hist).long().cpu().numpy()
+            else:
+                out[name] = torch.bincount(pred[v] * C + g, minlength=C * C).view(C, C).cpu().numpy()
         model.cfg = cfg
         stats["sec"] = time.time() - t0
+        if args.per_scene:
+            stats["conf"] = {m: c.tolist() for m, c in out.items()}
         queue.put((out, stats))
     queue.put(None)
 
@@ -70,6 +77,8 @@ def summarize(conf, labels, seen):
     acc = np.where(present, tp / np.maximum(gt_count, 1), np.nan)
     res = dict(mIoU=float(np.nanmean(iou)), mAcc=float(np.nanmean(acc)),
                allAcc=float(tp.sum() / conf.sum()),
+               mF1=float(np.nanmean(np.where(present, 2 * tp / np.maximum(conf.sum(0) + conf.sum(1), 1), np.nan))),
+               conf=conf.tolist(),
                class_iou={labels[i]: float(iou[i]) for i in range(len(labels)) if present[i]})
     if seen is not None:
         s = np.array([l.lower() in seen for l in labels])
@@ -94,12 +103,14 @@ def main():
     ap.add_argument("--normals", type=int, default=0)
     ap.add_argument("--domain", default="Indoor", choices=["Indoor", "Outdoor", "Aerial"])
     ap.add_argument("--dense_voxel", type=float, default=0.02)
+    ap.add_argument("--per_scene", type=int, default=0)
+    ap.add_argument("--data_root", default=None)
     ap.add_argument("--out", default="results/eval.json")
     for k, f in Config.__dataclass_fields__.items():
         ap.add_argument(f"--{k}", type=type(f.default), default=f.default)
     args = ap.parse_args()
 
-    files = scene_files(args.dataset, args.split)[::args.stride]
+    files = scene_files(args.dataset, args.split, args.data_root)[::args.stride]
     files = files[:args.limit] if args.limit else files
     gpus = [g for g in args.gpus.split(",") for _ in range(args.procs_per_gpu)]
     ctx = mp.get_context("spawn")
@@ -123,11 +134,13 @@ def main():
     for p in procs:
         p.join()
 
-    seen = set(snap_train_vocab()) if args.dataset.startswith("matterport") else None
+    seen = set(snap_train_vocab()) if args.dataset.startswith("matterport") or args.dataset == "underonefacade" else None
     results = {m: summarize(conf[m], labels, seen) for m in args.methods}
     report = dict(args=vars(args), num_scenes=len(stats),
                   mean_masks=float(np.mean([s["masks"] for s in stats])),
                   sec_per_scene=float(np.mean([s["sec"] for s in stats])), results=results)
+    if args.per_scene:
+        report["per_scene"] = stats
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     json.dump(report, open(args.out, "w"), indent=1)
     cols = ["mIoU", "mAcc", "allAcc"] + (["mIoU_seen", "mIoU_unseen"] if seen else [])

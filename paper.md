@@ -357,6 +357,7 @@ content), "screwdriver" for a PC-case box.
 | Replica | 8 scenes | instance AP, interactive |
 | nuScenes | official val, 6,019 keyframes | LiDAR semantic seg, instance AP, interactive |
 | SemanticKITTI | sequence 08, 4,071 scans | LiDAR semantic seg, instance AP, interactive |
+| UnderOneFacade | test, 17 façades (UK/DE/SG, TLS + MLS, 254M points) | zero-shot façade semantic seg (15/5 classes), interactive on façade parts |
 
 *Metrics*: mIoU / mAcc; instance AP over IoU 0.50:0.95 (also AP50, AP25); IoU after $k$ clicks (IoU@k) and number of
 clicks to reach 80/85/90% IoU (NoC); naming top-1 accuracy (free names mapped to labels by CLIP text similarity); latency
@@ -378,6 +379,35 @@ fails on ground classes (terrain 0.0 IoU), and fusing it costs mIoU even though 
 (other-vehicle 2.9 → 11.9) and on mAcc (45.8 vs. 43.7). A mismatched dense model is also why §7.2's guard exists. With
 a Matterport-trained dense model on ScanNet, OpenScene drops to 37.3 while OpenSNAP keeps 47.6 [T15] — the segmenter
 token makes the system robust to dense-model mismatch.
+
+**Out of domain: urban façades** [T2d]. UnderOneFacade (Wang et al., ECCV 2026) labels terrestrial and mobile laser
+scans of 366 façades in the UK, Germany and Singapore with 15 architectural classes (wall, window, door, balcony,
+molding, …) and 5 coarse groups. Neither SNAP nor any OpenScene model saw façade data; we chose the configuration
+(Outdoor segmenter, nuScenes dense model) on 22 validation façades and ran the 17-façade test split once, scoring every
+raw point (254M).
+
+| method | LoFG3 mIoU | LoFG3 OA | LoFG2 mIoU | LoFG2 OA |
+|---|---|---|---|---|
+| OpenScene 3D (point-wise) | 8.4 | 38.5 | 29.8 | 55.5 |
+| mask-anchored pooling | **9.0** | **42.1** | **31.8** | **59.4** |
+| OpenSNAP (full) | 8.1 | 39.8 | 28.1 | 56.5 |
+| *supervised, trained on the other continent (published)* | 6.6–23.6 | 32.1–51.9 | 25.7–40.8 | 48.6–65.8 |
+| *supervised, trained on all façades (published, best)* | 33.4 | 62.7 | – | – |
+
+Zero-shot, the system lands at the low end of what façade-trained networks reach when moved to another continent, but
+far below in-domain training. The failure is structural, not lexical: windows, mouldings and balconies are parts lying
+on one wall surface, and SNAP's object-level masks do not separate them (wall 44 IoU; window, balcony, molding 0). An
+oracle that gives every proposal its true majority class reaches only 18–21 mIoU on three validation façades
+(`results/aux/facade_oracle_val_outdoor.json`), so better
+naming cannot close the gap; part-level proposals would. Here the segmenter token is the weakest expert (4.6), the
+relay helps it (+0.7), and fusing it with the dense branch costs 0.9 against pooling alone.
+
+*Against other zero-shot ideas* [T2e]: pooling also beats a 3D shape-text model labelling the very same masks (OpenShape:
+4.2 / 15.4 LoFG3 / LoFG2 mIoU) and render-then-lift pipelines that render the scan from virtual cameras and lift 2D
+open-vocabulary masks (Grounded-SAM 6.1 / 16.6; SAM + SigLIP 5.1 / 15.2), although those see real colour and we use XYZ
+only. *Search* [T3f]: concept and relational queries for façade parts fail for every zero-shot system — OpenSNAP 0.3
+AP25, the best alternative (Grounded-SAM) 3.3, all of it on photo-like UK renders and 0 on German scans. Record:
+`results/FACADE.md`.
 
 ### 8.3 Query accuracy and instance segmentation [T3, T4, T4b–d]
 | dataset (classes) | SNAP token | **OpenSNAP** | + cracking | published references |
@@ -439,11 +469,20 @@ decoder.
 | Replica | 59.5 / 60.1 | **74.8 / 81.9** | 72.6 / 80.3 |
 | nuScenes | 63.8 / 65.4 | 72.3 / 78.4 | **73.4 / 79.2** |
 | SemanticKITTI | 67.6 / 70.4 | 71.0 / 76.5 | **71.9 / 76.9** |
+| UnderOneFacade parts (zero-shot) | 10.1 / 10.1 | 26.2 / 46.2 | 37.4 / 49.4 |
 
 Token tuning is the most robust choice indoors and on held-out data; the trained corrective decoder adds most on the
 outdoor domains it was trained on. A decoder trained on ScanNet only overfits indoors (e.g. Replica IoU@10 75.8 vs.
 81.9 for token tuning), which is why the shipped decoder is multi-domain. Clicks to 90% IoU drop everywhere (e.g.
 nuScenes 6.18 → 4.78).
+
+**Façade parts** (UnderOneFacade test, 1,603 window/door/molding/… instances = connected components of the part labels,
+3 m crops). A click on a window returns the wall: SNAP reaches 11.0 IoU@5 and positive clicks barely help. Negative
+clicks are what such a part needs, and they more than triple IoU@5 (37.4) and quadruple IoU@10 (49.4); per class, doors
+29 → 65, columns 30 → 59, windows 5 → 25 IoU@5. Clicks to 90% stay high (9.5 of 10). Dedicated click segmenters
+are well ahead under identical crops and clicks [T5l]: InterObject3D 56.8, AGILE3D 57.6, Point-SAM 64.1 IoU@5, and with
+colour zeroed still 54.1 (AGILE3D) and 59.9 (Point-SAM). Point-SAM, trained on object parts, leads most on the
+colourless German scans (48.7 vs 17.2). Façade parts are where object-level promptable segmentation stops transferring.
 
 **Backbone adapters** (positive clicks only, IoU@1) [T5i]: nuScenes 53.5 → **57.0** (+3.5, and +3.3–4.0 at every click
 count), SemanticKITTI 56.7 → 57.5, S3DIS rooms 53.3 → 53.3 (later clicks +0.5), S3DIS crops 56.1 → 54.2 (later clicks
@@ -512,7 +551,10 @@ The full study is in `results/COMPARISON.md`. In brief:
 
 ## 10. Limitations
 * Positive-only clicking is SNAP's; our segmentation gains come from negative clicks, test-time methods and adapters.
-* Flat objects on walls and floors (boards, rugs, paintings) are hard with XYZ-only input.
+* Flat objects on walls and floors (boards, rugs, paintings) are hard with XYZ-only input. The same holds for façade
+  parts: zero-shot façade segmentation reaches 9.0 LoFG3 mIoU against 33.4 for supervised training (T2d), because the
+  object-level proposals do not split a wall into its windows and mouldings; for the same reason façade-part search
+  fails (0.3 AP25, T3f) and part-trained click segmenters are 17–27 IoU@5 ahead (T5l).
 * Truly novel concepts remain hard; most unseen-class gains come from near-synonyms of seen classes.
 * Tuple independence is an assumption for composite predicates; in practice max-witness, noisy-OR and clipped-count
   semantics differ by ≤ 0.5 AP50 (C9).

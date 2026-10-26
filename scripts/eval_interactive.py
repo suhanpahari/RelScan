@@ -15,8 +15,8 @@ from opensnap import paths  # noqa: E402
 
 DATA = {"s3dis": ("pointcept/s3dis", ["Area_5"]), "scannet": ("pointcept/scannet", ["val"]),
         "nuscenes": ("pointcept/nuscenes", ["val"]), "semantickitti": ("pointcept/semantickitti", ["val"]),
-        "replica": ("pointcept/replica", ["all"])}
-STRUCT = {"s3dis": {0, 1, 2}, "scannet": set(), "nuscenes": set(), "semantickitti": set(), "replica": set()}
+        "replica": ("pointcept/replica", ["all"]), "underonefacade": ("pointcept/underonefacade", ["test"])}
+STRUCT = {"s3dis": {0, 1, 2}, "scannet": set(), "nuscenes": set(), "semantickitti": set(), "replica": set(), "underonefacade": set()}
 
 
 def load(path, use_color, stuff=0):
@@ -99,7 +99,11 @@ def worker(rank, gpu, files, args, queue):
     snap = build_model(args)
     if args.adapter:
         snap.load_adapter(args.adapter)
-    if args.protocol == "pn":
+    baseline = None
+    if args.method in ("agile3d", "interobject3d", "pointsam"):  # published segmenters, same clicks and crops
+        from click_baselines import BASELINES
+        args.seg = baseline = BASELINES[args.method]()
+    elif args.protocol == "pn":
         from opensnap.clicks import ClickSegmenter, CorrectiveSegmenter
         tuner = ClickSegmenter(snap, "ttt" if args.method == "v5ttt" else args.method, steps=args.steps, lr=args.lr, reg=args.reg,
                                margin=args.margin, radius=args.radius, tta=args.tta, tta_radius=args.tta_radius)
@@ -123,6 +127,14 @@ def worker(rank, gpu, files, args, queue):
             else:
                 gt = torch.zeros(len(vcoord), dtype=torch.bool, device=vcoord.device)
                 gt[inv[ins_t == i]] = True
+            if not gt.any():  # object lost in voxelization/crop
+                continue
+            if baseline is not None:
+                pts = np.zeros_like(coord) if color is None else color  # --color 0: XYZ-only baseline
+                pts = pts[sel] if args.crops else pts
+                vcolor = torch.zeros(len(vcoord), 3, device=vcoord.device).index_add_(0, inv, torch.from_numpy(pts).to(vcoord.device))
+                cnt = torch.bincount(inv, minlength=len(vcoord)).clamp(min=1)[:, None]
+                baseline.prepare(vcoord, (vcolor / cnt).cpu().numpy())
             ious = click_object(snap, vcoord, gt, args)
             queue.put(dict(scene=os.path.basename(f), obj=int(i), size=int(gt.sum()), seg=majority(seg[ins == i]), ious=ious))
     queue.put(None)
@@ -160,7 +172,8 @@ def main():
     ap.add_argument("--stride", type=int, default=1)
     ap.add_argument("--min_points", type=int, default=100)
     ap.add_argument("--protocol", default="pos", choices=["pos", "pn"])
-    ap.add_argument("--method", default="snap", choices=["snap", "subtract", "ttt", "v5", "v5ttt"])
+    ap.add_argument("--method", default="snap", choices=["snap", "subtract", "ttt", "v5", "v5ttt", "agile3d", "interobject3d",
+                                                          "pointsam"])
     ap.add_argument("--adapter", default="")
     ap.add_argument("--tta", type=int, default=0)
     ap.add_argument("--tta_radius", type=float, default=0.1)
@@ -178,9 +191,11 @@ def main():
     ap.add_argument("--gpus", default="0")
     ap.add_argument("--procs_per_gpu", type=int, default=2)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--split", default="", help="override the dataset's default split(s)")
     ap.add_argument("--out", default="results/interactive.json")
     args = ap.parse_args()
     root, splits = DATA[args.dataset]
+    splits = args.split.split(",") if args.split else splits
     files = sorted(f for s in splits for f in glob.glob(os.path.join(paths.DOWNLOADS, "data", root, s, "*")))
     files = files[::args.stride]
     files = files[:args.limit] if args.limit else files

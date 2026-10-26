@@ -72,6 +72,144 @@ def semseg():
               "features are zero-shot here; the segmenter saw SemanticKITTI train. The weak cross-dataset dense branch (terrain 0.0, "
               "parking 0.1 IoU) costs mIoU on stuff classes; OpenSNAP gains on objects (other vehicle 2.9 -> 11.9) and in mAcc.")
 
+    uf = load("underonefacade_test.json")
+    if uf:
+        lofg2 = np.array([0, 1, 1, 0, 2, 2, 0, 0, 0, 3, 3, 4, 1, 4, 4])  # authors' LoFG3 -> LoFG2 map
+
+        def scores(c, coarse=False):
+            c = np.asarray(c, np.float64)
+            if coarse:
+                c2 = np.zeros((5, 5))
+                np.add.at(c2, (lofg2[:, None], lofg2[None, :]), c)
+                c = c2
+            tp, g, p = np.diag(c), c.sum(0), c.sum(1)
+            pr = g > 0
+            return tp.sum() / c.sum(), np.mean((tp / np.maximum(g + p - tp, 1))[pr]), np.mean((2 * tp / np.maximum(g + p, 1))[pr])
+
+        europe = lambda s: s.startswith(("DEBY", "Lenton"))
+        part = lambda k, eu: sum(np.array(s["conf"][k], np.float64) for s in uf["per_scene"] if europe(s["scene"]) == eu)
+        rows = []
+        for k, n in names.items():
+            c = uf["results"][k]["conf"]
+            (oa3, m3, f3), (oa2, m2, _) = scores(c), scores(c, True)
+            rows.append([n, pct(m3), pct(f3), pct(oa3), pct(m2), pct(oa2), pct(scores(part(k, False))[1]),
+                         pct(scores(part(k, True))[1]), pct(uf["results"][k]["mIoU_seen"]), pct(uf["results"][k]["mIoU_unseen"])])
+        rows.append(["Supervised, other continent (published, xyz)", "6.6–14.8 / 9.4–23.6", "–", "32.1–42.6 / 33.9–51.9",
+                     "25.7–40.8 / 28.8–40.5", "48.6–60.9 / 48.9–65.8", "6.6–14.8", "9.4–23.6", "", ""])
+        rows.append(["Supervised, same data (published, xyz, DGCNN)", "33.4", "–", "62.7", "–", "–", "–", "–", "", ""])
+        table(f"T2d · Zero-shot facade semantic segmentation, UnderOneFacade test ({uf['num_scenes']} facades, TLS/MLS, UK/DE/SG)",
+              "underonefacade_test.json",
+              ["method", "LoFG3 mIoU", "LoFG3 mF1", "LoFG3 OA", "LoFG2 mIoU", "LoFG2 OA", "Asia LoFG3", "Europe LoFG3",
+               "seen", "unseen"], rows,
+              "No facade data in training. Segmenter in Outdoor mode (selected on 22 validation facades among Outdoor/Indoor/"
+              "Aerial x nuScenes/ScanNet/Matterport dense models); dense branch = OpenScene nuScenes model, cross-dataset. Input "
+              "voxelized at 5 cm (7.8 cm for one 36M-point facade); every raw point is scored with its voxel's prediction. Raw "
+              "label 16 (Singapore) -> other, as in the authors' loader. Seen = 8 class names in the segmenter's training "
+              "vocabulary (wall, window, door, decoration, column, stairs, terrain, blinds). Published rows (Wang et al., ECCV "
+              "2026, Tables 2 and 6) are trained on facades: 'other continent' = Europe->Asia / Asia->Europe ranges over six "
+              "architectures, evaluated on the authors' target-continent test sets (Europe includes ZAHA scans not in this "
+              "release), so they bracket rather than match our split. Facade parts lie on one surface, which the object-level "
+              "masks do not separate: wall 44 IoU, window/balcony/molding 0.")
+
+
+def facade_compare():
+    """UnderOneFacade: OpenSNAP against other zero-shot ideas (same split, same scoring)."""
+    uf = load("underonefacade_test.json")
+    lofg2 = np.array([0, 1, 1, 0, 2, 2, 0, 0, 0, 3, 3, 4, 1, 4, 4])
+
+    def sc(c, coarse=False):
+        c = np.asarray(c, np.float64)
+        if coarse:
+            c2 = np.zeros((5, 5))
+            np.add.at(c2, (lofg2[:, None], lofg2[None, :]), c)
+            c = c2
+        tp, g, p = np.diag(c), c.sum(0), c.sum(1)
+        pr = g > 0
+        return [np.mean((tp / np.maximum(g + p - tp, 1))[pr]), np.mean((2 * tp / np.maximum(g + p, 1))[pr]), tp.sum() / c.sum()]
+
+    rows = []
+    entries = [("OpenScene 3D, point-wise (dense 3D CLIP)", uf, "openscene"),
+               ("**OpenSNAP: mask-anchored pooling**", uf, "mask_pool"), ("OpenSNAP (full)", uf, "opensnap"),
+               ("OpenShape on the same masks (3D shape-text)", load("aux/facade_openshape.json"), "openshape"),
+               ("Render-then-lift: Grounded-SAM, RGB renders", load("aux/facade_rl_gsam.json"), "gsam"),
+               ("Render-then-lift: Grounded-SAM, geometry renders", load("aux/facade_rl_gsam_geom.json"), "gsam"),
+               ("Render-then-lift: SAM + SigLIP, RGB renders", load("aux/facade_rl_sam_siglip.json"), "sam_siglip")]
+    for name, d, k in entries:
+        if d and k in d["results"]:
+            c = d["results"][k]["conf"]
+            rows.append([name] + [pct(x) for x in sc(c)] + [pct(sc(c, True)[0])])
+        else:
+            rows.append([name, "pending", "", "", ""])
+    if uf:
+        table("T2e · Zero-shot facade semantic segmentation against other zero-shot ideas (UnderOneFacade test, 17 facades)",
+              "underonefacade_test.json, aux/facade_openshape.json, aux/facade_rl_*.json",
+              ["method", "LoFG3 mIoU", "LoFG3 mF1", "LoFG3 OA", "LoFG2 mIoU"], rows,
+              "All methods zero-shot on facades and scored on every raw point. OpenShape (spconv-all, OpenCLIP ViT-bigG) labels "
+              "exactly the segmenter proposals OpenSNAP pools over. Render-then-lift: virtual street-side cameras (frontal, "
+              "+-35 deg obliques, ~10 x 8 m tiles), 1024 px z-buffered splats, 2D labels lifted through the z-buffer and summed "
+              "over views, unseen points take the nearest seen point's label (scripts/facade_render_lift.py); RGB renders use "
+              "real colour for UK/Singapore and shaded geometry for Germany (no colour). OpenSNAP and OpenScene use XYZ only.")
+
+    reg = lambda s: "Germany" if s.startswith("DEBY") else ("UK" if s.startswith("Lenton") else "Singapore")
+    methods = [("pn_facade_snap", "SNAP (negatives ignored)", "XYZ"), ("pn_facade_v5mttt", "**OpenSNAP: decoder + token tuning**", "XYZ"),
+               ("pn_facade_interobject3d", "InterObject3D (ICRA'23, ScanNet)", "XYZ+RGB"),
+               ("pn_facade_agile3d", "AGILE3D (ICLR'24, ScanNet)", "XYZ+RGB"), ("pn_facade_agile3d_xyz", "AGILE3D, colour zeroed", "XYZ"),
+               ("pn_facade_pointsam", "Point-SAM (ViT-L, part + scene mixture)", "XYZ+RGB"),
+               ("pn_facade_pointsam_xyz", "Point-SAM, colour zeroed", "XYZ")]
+    rows = []
+    for f, name, inp in methods:
+        d = load(f"aux/{f}.json")
+        if not d:
+            rows.append([name, inp, "pending"] + [""] * 7)
+            continue
+        r = d["results"]
+        by = {g: np.array([x["ious"] for x in d["records"] if reg(x["scene"]) == g]) for g in ("Germany", "UK", "Singapore")}
+        rows.append([name, inp, pct(r["IoU@1"]), pct(r["IoU@3"]), pct(r["IoU@5"]), pct(r["IoU@10"]), f"{r['NoC@90']:.2f}"]
+                    + [f"{pct(v[:, 4].mean())} / {pct(v[:, 9].mean())}" for v in by.values()])
+    table("T5l · Corrective clicking on facade parts against published interactive segmenters (UnderOneFacade test)",
+          "aux/pn_facade_*.json",
+          ["method", "input", "IoU@1", "IoU@3", "IoU@5", "IoU@10", "NoC@90", "Germany IoU@5/10", "UK IoU@5/10", "Singapore IoU@5/10"], rows,
+          "1,603 parts (3D-connected components of window/door/balcony/molding/decoration/column/arch/stairs/blinds labels), "
+          "3 m crops; identical crops, voxels, click sequences (centre of the larger error region) and ground truth for every "
+          "method (scripts/click_baselines.py wraps the released weights with each method's own grid, colour scaling and click "
+          "encoding). German scans have no colour, so the Germany column is XYZ-only for every method. None of the methods "
+          "saw facades; Point-SAM was trained on a mixture of object-part (PartNet, Fusion360, ShapeNet) and scene (ScanNet) masks (configs/dataset/mixture.yaml).")
+
+
+def facade_search():
+    fs = load("facade_search.json")
+    if not fs:
+        return pending("T3f · Facade search", "facade_search.json")
+    r = fs["results"]
+    build = {"opensnap": ("underonefacade_test.json", None), "gsam": ("aux/facade_rl_gsam.json", None),
+             "sam_siglip": ("aux/facade_rl_sam_siglip.json", None), "openshape": ("aux/facade_openshape.json", None)}
+    sec = {k: np.mean([x["sec"] for x in load(f)["per_scene"]]) for k, (f, _) in build.items() if load(f)}
+    names = [("snap_native", "Segmenter token only (OVQL engine)", "opensnap"), ("opensnap", "**OpenSNAP (OVQL engine)**", "opensnap"),
+             ("opensnap_refine", "OpenSNAP + cracking", "opensnap"), ("openscene_cluster", "OpenScene 3D + connected components", "opensnap"),
+             ("openshape", "OpenShape on the segmenter's masks", "openshape"),
+             ("gsam", "Render-then-lift: Grounded-SAM", "gsam"), ("sam_siglip", "Render-then-lift: SAM + SigLIP", "sam_siglip")]
+    rows = []
+    for k, n, b in names:
+        if f"{k}/IS" not in r:
+            continue
+        i, nr = r[f"{k}/IS"], r.get(f"{k}/NEAR", {})
+        reg = [pct(r.get(f"{k}/IS/{g}", {}).get("AP25")) for g in ("Germany", "UK", "Singapore")]
+        rows.append([n, pct(i["AP"]), pct(i["AP50"]), pct(i["AP25"]), pct(nr.get("AP50")), pct(nr.get("AP25"))] + reg
+                    + [f"{i['ms']:.1f}", f"{sec[b]:.0f}" if b in sec else "–"])
+    pc = r["gsam/IS"]["per_class_AP25"]
+    table("T3f · Comparative search on facades: concept (IS) and relational (IS AND NEAR 0.5 m) queries, instance AP "
+          "(UnderOneFacade test, 1,606 part instances)", "facade_search.json",
+          ["system", "IS AP", "IS AP50", "IS AP25", "NEAR AP50", "NEAR AP25", "Germany IS AP25", "UK IS AP25", "Singapore IS AP25",
+           "ms / query", "build s / facade"], rows,
+          "Same queries for every system (each element class present in a facade; up to 5 sampled NEAR pairs per facade), "
+          "scored at point level against 3D-connected components of the part labels. All systems zero-shot. Baselines answer "
+          "NEAR by composing their IS answers (bbox gap <= 0.5 m, score product); OpenSNAP uses its engine. Render-then-lift "
+          "instances = 2D masks lifted through a z-buffer and merged across views (point IoU > 0.3, same label). Build = "
+          "one-off ingest per facade (OpenSNAP: segmenter + dense features + relation; render-then-lift: rendering + 2D "
+          "models + lifting); ms / query excludes build. Grounded-SAM per-class AP25: "
+          + ", ".join(f"{c} {pct(v)}" for c, v in pc.items()) + ". No system localises facade parts reliably; "
+          "render-then-lift does so only on photo-like UK colour renders.")
+
 
 def queries():
     eng = {"snap_native": "Segmenter token only", "opensnap": "**OpenSNAP**", "opensnap_refine": "OpenSNAP + cracking"}
@@ -194,7 +332,8 @@ def interactive():
               "Every 10th scan; things = panoptic instances (>= 10 points), stuff = one segment per class.")
     sets = [("scannet_dev", "ScanNet val (dev subset)", None), ("s3dis_crops", "S3DIS crops", "s3dis_interactive_crops.json"), ("s3dis_full", "S3DIS rooms", "s3dis_interactive_snap_zeroshot_xyz.json"),
             ("replica", "Replica", None), ("nuscenes", "nuScenes", "nuscenes_interactive.json"),
-            ("kitti", "SemanticKITTI", "semantickitti_interactive.json")]
+            ("kitti", "SemanticKITTI", "semantickitti_interactive.json"),
+            ("facade", "UnderOneFacade (facade parts, zero-shot)", "underonefacade_interactive.json")]
     methods = [("snap", "SNAP, corrective protocol (negatives ignored)"), ("subtract", "+ negative-mask subtraction"),
                ("ttt", "**OpenSNAP: test-time token tuning**"), ("v5", "OpenSNAP: corrective decoder (ScanNet-trained)"), ("v5m", "OpenSNAP: corrective decoder (multi-domain)"),
                ("v5ttt", "OpenSNAP: ScanNet decoder + token tuning"), ("v5mttt", "OpenSNAP: multi-domain decoder + token tuning")]
@@ -214,7 +353,9 @@ def interactive():
               ["dataset", "method", "IoU@1", "IoU@3", "IoU@5", "IoU@10", "NoC@90"], rows,
               "Corrective protocol: every click goes to the centre of the larger error region (positive on misses, negative on "
               "false positives). SNAP cannot use negative clicks. Token tuning: 30 Adam steps on the mask token over SNAP's frozen "
-              "voxel embeddings, hyper-parameters chosen on ScanNet val only (aux/sweep_ttt_scannet_*.json).")
+              "voxel embeddings, hyper-parameters chosen on ScanNet val only (aux/sweep_ttt_scannet_*.json). UnderOneFacade: "
+              "test split, instances = 3D-connected components of window/door/balcony/molding/decoration/column/arch/stairs/"
+              "blinds labels at 5 cm (>= 100 voxels; scripts/prep_facade_instances.py), 3 m crops.")
     row = lambda r: [pct(r.get(k)) for k in ("IoU@1", "IoU@3", "IoU@5", "IoU@10")] + ([f"{r['NoC@90']:.2f}"] if "IoU@10" in r else ["–"])
     pairs = [("S3DIS rooms", "s3dis_interactive_snap_zeroshot_xyz.json", "aux/pn_posonly_s3dis_full_v6.json", "held out"),
              ("S3DIS crops", "s3dis_interactive_crops.json", "aux/pn_posonly_s3dis_crops_v6.json", "held out"),
@@ -713,7 +854,7 @@ def landscape():
 
 if __name__ == "__main__":
     out.append("# OpenSNAP result tables\n\nGenerated by `scripts/make_tables.py` from the JSON files in `results/`. Do not edit by hand.\n")
-    for f in (semseg, queries, refiner, interactive, naming, text_prompts, text_s3dis, single_click, proposals, systems, sweeps, building, compare, landscape):
+    for f in (semseg, facade_compare, facade_search, queries, refiner, interactive, naming, text_prompts, text_s3dis, single_click, proposals, systems, sweeps, building, compare, landscape):
         f()
     open(os.path.join(R, "TABLES.md"), "w").write("\n".join(out))
     print("\n".join(out))

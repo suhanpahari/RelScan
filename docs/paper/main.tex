@@ -118,7 +118,9 @@ vision--language model (Qwen2.5-VL-3B) that chooses among 3D-proposed names from
 
 \section{Evaluation}\label{sec:exp}
 \textbf{Setup.} ScanNet~\cite{scannet} val (312 scenes, 20 classes) and ScanNet200 splits; S3DIS~\cite{s3dis} Area~5
-(zero-shot); Matterport3D~\cite{matterport} 160-class test (406 regions). Evaluation code and protocols are released.
+(zero-shot); Matterport3D~\cite{matterport} 160-class test (406 regions); UnderOneFacade~\cite{underonefacade} test
+(17 laser-scanned fa\c{c}ades from the UK, Germany and Singapore; out of domain for every model we use). Evaluation code
+and protocols are released.
 
 \begin{table}[t]\centering\caption{Open-vocabulary 3D semantic segmentation (mIoU).}\label{tab:semseg}
 \begin{tabular}{lccc}\toprule
@@ -154,6 +156,32 @@ multi-click IoU (IoU@5 71.0 vs 72.8 on a held-out subset), and a frozen segmente
 an oracle headroom of only +2.0 IoU on ScanNet and +3.0 on S3DIS that a learned quality head does not capture; \sys{}
 therefore keeps the segmenter frozen.
 
+\begin{table}[t]\centering\caption{Zero-shot fa\c{c}ade understanding on UnderOneFacade test: semantic
+segmentation (15 fine / 5 coarse classes, mIoU) and corrective clicking on fa\c{c}ade parts (IoU@5 / IoU@10).}\label{tab:facade}
+\begin{tabular}{lcc}\toprule
+semantic segmentation & fine & coarse \\\midrule
+OpenScene 3D (point-wise) & 8.4 & 29.8 \\
+mask-anchored pooling & \textbf{9.0} & \textbf{31.8} \\
+\sys{} & 8.1 & 28.1 \\
+supervised, other continent (published) & 6.6--23.6 & 25.7--40.8 \\
+supervised, in domain (published, best) & 33.4 & -- \\\midrule
+fa\c{c}ade parts, corrective clicks & IoU@5 & IoU@10 \\\midrule
+segmenter (negatives ignored) & 10.1 & 10.1 \\
+\sys{} token tuning & 26.2 & 46.2 \\
+\sys{} decoder + tuning & 37.4 & 49.4 \\
+AGILE3D / Point-SAM~\cite{agile3d,pointsam} & 57.6 / \textbf{64.1} & 70.1 / \textbf{71.9} \\\bottomrule
+\end{tabular}\end{table}
+
+\textbf{Out of domain: fa\c{c}ades (Table~\ref{tab:facade}).} No component saw fa\c{c}ade data; the configuration was
+chosen on 22 validation fa\c{c}ades and every raw point (254M) is scored. Zero-shot semantics reach the low end of what
+fa\c{c}ade-trained networks achieve on another continent~\cite{underonefacade}, far below in-domain training. The
+limit is the proposals, not the vocabulary: windows and mouldings lie on one wall surface, the object-level masks do
+not separate them, and even an oracle that labels every proposal correctly reaches only 18--21 mIoU on three validation fa\c{c}ades.
+Object-anchored pooling still beats a 3D shape--text model on the same masks (4.2 fine mIoU) and render-then-lift
+pipelines with 2D open-vocabulary segmenters (5.1--6.1). Parts are the limit: negative clicks lift IoU@5 on 1{,}603
+fa\c{c}ade parts from 10.1 to 37.4, but dedicated click segmenters reach 54--64 even without colour, and concept search
+for parts fails for every zero-shot system (\sys{} 0.3, best alternative 3.3 AP25).
+
 \textbf{Systems.} \TBD{ingest time vs scene size; query latency on the stored relation ($\approx$2--4\,ms in pilot rooms)
 vs re-processing per query ($\approx$6--13\,s); storage; cracking amortisation over a workload with synonyms and absent
 terms}.
@@ -175,6 +203,8 @@ indexes, outdoor domains, learned calibration}.
 \bibitem{pointsam} Y.~Zhou \emph{et al.}, ``Point-SAM: Promptable 3D segmentation model for point clouds,'' 2024.
 \bibitem{interobject3d} T.~Kontogianni \emph{et al.}, ``Interactive object segmentation in 3D point clouds,'' in \emph{ICRA}, 2023.
 \bibitem{interactive4d} I.~Fradlin \emph{et al.}, ``Interactive4D: Interactive 4D LiDAR segmentation,'' 2024.
+\bibitem{underonefacade} Y.~Wang \emph{et al.}, ``UnderOneFacade: Worldwide facade semantic segmentation benchmark
+dataset,'' in \emph{ECCV}, 2026, arXiv:2607.02018.
 \bibitem{openscene} S.~Peng \emph{et al.}, ``OpenScene: 3D scene understanding with open vocabularies,'' in \emph{CVPR}, 2023.
 \bibitem{openmask3d} A.~Takmaz \emph{et al.}, ``OpenMask3D: Open-vocabulary 3D instance segmentation,'' in \emph{NeurIPS}, 2023.
 \bibitem{clip} A.~Radford \emph{et al.}, ``Learning transferable visual models from natural language supervision,'' in \emph{ICML}, 2021.

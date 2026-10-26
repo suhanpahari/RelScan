@@ -66,6 +66,72 @@ _Source: semantickitti_val.json_
 
 Dense branch = OpenScene's nuScenes model applied cross-dataset (OpenScene has no KITTI model), so the dense features are zero-shot here; the segmenter saw SemanticKITTI train. The weak cross-dataset dense branch (terrain 0.0, parking 0.1 IoU) costs mIoU on stuff classes; OpenSNAP gains on objects (other vehicle 2.9 -> 11.9) and in mAcc.
 
+### T2d · Zero-shot facade semantic segmentation, UnderOneFacade test (17 facades, TLS/MLS, UK/DE/SG)
+
+_Source: underonefacade_test.json_
+
+| method | LoFG3 mIoU | LoFG3 mF1 | LoFG3 OA | LoFG2 mIoU | LoFG2 OA | Asia LoFG3 | Europe LoFG3 | seen | unseen |
+|---|---|---|---|---|---|---|---|---|---|
+| OpenScene 3D (point-wise) | 8.4 | 13.0 | 38.5 | 29.8 | 55.5 | 9.8 | 7.2 | 7.8 | 9.1 |
+| Segmenter text token | 4.6 | 8.1 | 15.2 | 12.5 | 27.6 | 4.1 | 5.2 | 4.2 | 5.0 |
+| + vocabulary relay | 5.3 | 9.1 | 16.3 | 16.8 | 32.7 | 5.3 | 5.7 | 4.3 | 6.5 |
+| Mask-anchored pooling | 9.0 | 13.6 | 42.1 | 31.8 | 59.4 | 10.2 | 7.9 | 7.5 | 10.7 |
+| + dense blend | 8.7 | 13.2 | 41.5 | 31.0 | 58.9 | 9.9 | 7.5 | 7.5 | 10.0 |
+| OpenSNAP w/o relay | 7.7 | 11.7 | 38.8 | 27.1 | 56.7 | 8.7 | 6.6 | 7.6 | 7.9 |
+| **OpenSNAP (full)** | 8.1 | 12.3 | 39.8 | 28.1 | 56.5 | 8.9 | 7.1 | 7.6 | 8.7 |
+| Supervised, other continent (published, xyz) | 6.6–14.8 / 9.4–23.6 | – | 32.1–42.6 / 33.9–51.9 | 25.7–40.8 / 28.8–40.5 | 48.6–60.9 / 48.9–65.8 | 6.6–14.8 | 9.4–23.6 |  |  |
+| Supervised, same data (published, xyz, DGCNN) | 33.4 | – | 62.7 | – | – | – | – |  |  |
+
+No facade data in training. Segmenter in Outdoor mode (selected on 22 validation facades among Outdoor/Indoor/Aerial x nuScenes/ScanNet/Matterport dense models); dense branch = OpenScene nuScenes model, cross-dataset. Input voxelized at 5 cm (7.8 cm for one 36M-point facade); every raw point is scored with its voxel's prediction. Raw label 16 (Singapore) -> other, as in the authors' loader. Seen = 8 class names in the segmenter's training vocabulary (wall, window, door, decoration, column, stairs, terrain, blinds). Published rows (Wang et al., ECCV 2026, Tables 2 and 6) are trained on facades: 'other continent' = Europe->Asia / Asia->Europe ranges over six architectures, evaluated on the authors' target-continent test sets (Europe includes ZAHA scans not in this release), so they bracket rather than match our split. Facade parts lie on one surface, which the object-level masks do not separate: wall 44 IoU, window/balcony/molding 0.
+
+### T2e · Zero-shot facade semantic segmentation against other zero-shot ideas (UnderOneFacade test, 17 facades)
+
+_Source: underonefacade_test.json, aux/facade_openshape.json, aux/facade_rl_*.json_
+
+| method | LoFG3 mIoU | LoFG3 mF1 | LoFG3 OA | LoFG2 mIoU |
+|---|---|---|---|---|
+| OpenScene 3D, point-wise (dense 3D CLIP) | 8.4 | 13.0 | 38.5 | 29.8 |
+| **OpenSNAP: mask-anchored pooling** | 9.0 | 13.6 | 42.1 | 31.8 |
+| OpenSNAP (full) | 8.1 | 12.3 | 39.8 | 28.1 |
+| OpenShape on the same masks (3D shape-text) | 4.2 | 7.4 | 12.1 | 15.4 |
+| Render-then-lift: Grounded-SAM, RGB renders | 6.1 | 10.3 | 22.2 | 16.6 |
+| Render-then-lift: Grounded-SAM, geometry renders | 4.8 | 8.2 | 17.6 | 14.3 |
+| Render-then-lift: SAM + SigLIP, RGB renders | 5.1 | 8.9 | 20.8 | 15.2 |
+
+All methods zero-shot on facades and scored on every raw point. OpenShape (spconv-all, OpenCLIP ViT-bigG) labels exactly the segmenter proposals OpenSNAP pools over. Render-then-lift: virtual street-side cameras (frontal, +-35 deg obliques, ~10 x 8 m tiles), 1024 px z-buffered splats, 2D labels lifted through the z-buffer and summed over views, unseen points take the nearest seen point's label (scripts/facade_render_lift.py); RGB renders use real colour for UK/Singapore and shaded geometry for Germany (no colour). OpenSNAP and OpenScene use XYZ only.
+
+### T5l · Corrective clicking on facade parts against published interactive segmenters (UnderOneFacade test)
+
+_Source: aux/pn_facade_*.json_
+
+| method | input | IoU@1 | IoU@3 | IoU@5 | IoU@10 | NoC@90 | Germany IoU@5/10 | UK IoU@5/10 | Singapore IoU@5/10 |
+|---|---|---|---|---|---|---|---|---|---|
+| SNAP (negatives ignored) | XYZ | 9.9 | 10.0 | 10.1 | 10.1 | 9.92 | 6.0 / 6.0 | 8.3 / 8.3 | 11.9 / 12.0 |
+| **OpenSNAP: decoder + token tuning** | XYZ | 9.8 | 25.7 | 37.4 | 49.4 | 9.52 | 17.2 / 23.0 | 38.0 / 49.1 | 43.0 / 57.2 |
+| InterObject3D (ICRA'23, ScanNet) | XYZ+RGB | 27.4 | 45.5 | 56.8 | 70.6 | 8.67 | 22.8 / 38.2 | 59.7 / 71.9 | 65.6 / 79.4 |
+| AGILE3D (ICLR'24, ScanNet) | XYZ+RGB | 30.4 | 47.7 | 57.6 | 70.1 | 8.52 | 21.6 / 30.1 | 65.0 / 78.1 | 65.1 / 78.7 |
+| AGILE3D, colour zeroed | XYZ | 28.6 | 44.2 | 54.1 | 68.1 | 8.66 | 22.1 / 30.8 | 60.3 / 75.4 | 60.9 / 76.1 |
+| Point-SAM (ViT-L, part + scene mixture) | XYZ+RGB | 19.8 | 53.0 | 64.1 | 71.9 | 8.82 | 48.7 / 57.9 | 63.4 / 71.1 | 68.8 / 76.3 |
+| Point-SAM, colour zeroed | XYZ | 13.9 | 46.1 | 59.9 | 69.9 | 9.07 | 48.1 / 57.7 | 58.7 / 69.3 | 63.7 / 73.6 |
+
+1,603 parts (3D-connected components of window/door/balcony/molding/decoration/column/arch/stairs/blinds labels), 3 m crops; identical crops, voxels, click sequences (centre of the larger error region) and ground truth for every method (scripts/click_baselines.py wraps the released weights with each method's own grid, colour scaling and click encoding). German scans have no colour, so the Germany column is XYZ-only for every method. None of the methods saw facades; Point-SAM was trained on a mixture of object-part (PartNet, Fusion360, ShapeNet) and scene (ScanNet) masks (configs/dataset/mixture.yaml).
+
+### T3f · Comparative search on facades: concept (IS) and relational (IS AND NEAR 0.5 m) queries, instance AP (UnderOneFacade test, 1,606 part instances)
+
+_Source: facade_search.json_
+
+| system | IS AP | IS AP50 | IS AP25 | NEAR AP50 | NEAR AP25 | Germany IS AP25 | UK IS AP25 | Singapore IS AP25 | ms / query | build s / facade |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Segmenter token only (OVQL engine) | 0.0 | 0.0 | 0.1 | 0.1 | 0.2 | 0.0 | 0.2 | 0.2 | 2.2 | 24 |
+| **OpenSNAP (OVQL engine)** | 0.0 | 0.1 | 0.3 | 0.1 | 0.4 | 0.0 | 1.4 | 0.4 | 2.5 | 24 |
+| OpenSNAP + cracking | 0.0 | 0.1 | 0.4 | 0.1 | 0.7 | 0.0 | 1.5 | 0.4 | 73.7 | 24 |
+| OpenScene 3D + connected components | 0.0 | 0.1 | 0.3 | 0.0 | 0.1 | 0.0 | 0.7 | 0.4 | 0.0 | 24 |
+| OpenShape on the segmenter's masks | 0.1 | 0.2 | 1.1 | 1.5 | 2.0 | 0.0 | 2.3 | 1.4 | 18.3 | 51 |
+| Render-then-lift: Grounded-SAM | 0.2 | 1.7 | 3.3 | 2.8 | 2.8 | 0.0 | 18.6 | 0.9 | 0.3 | 18 |
+| Render-then-lift: SAM + SigLIP | 0.0 | 0.0 | 1.2 | 0.0 | 0.7 | 0.0 | 4.0 | 1.2 | 0.3 | 56 |
+
+Same queries for every system (each element class present in a facade; up to 5 sampled NEAR pairs per facade), scored at point level against 3D-connected components of the part labels. All systems zero-shot. Baselines answer NEAR by composing their IS answers (bbox gap <= 0.5 m, score product); OpenSNAP uses its engine. Render-then-lift instances = 2D masks lifted through a z-buffer and merged across views (point IoU > 0.3, same label). Build = one-off ingest per facade (OpenSNAP: segmenter + dense features + relation; render-then-lift: rendering + 2D models + lifting); ms / query excludes build. Grounded-SAM per-class AP25: arch 0.0, column 5.2, decoration 0.0, door 3.8, molding 0.0, window 6.1, balcony 14.3, blinds 0.0, stairs 0.0. No system localises facade parts reliably; render-then-lift does so only on photo-like UK colour renders.
+
 ### T3 · OVQL query workloads (instance AP, IoU 0.5:0.95)
 
 _Source: s3dis_queries.json (68 rooms, object classes), scannet_queries.json (156 val scenes)_
@@ -244,8 +310,13 @@ _Source: aux/pn_*.json_
 | SemanticKITTI | OpenSNAP: corrective decoder (ScanNet-trained) | 56.9 | 65.1 | 68.6 | 72.8 | 5.11 |
 | SemanticKITTI | OpenSNAP: corrective decoder (multi-domain) | 56.8 | 67.4 | 71.2 | 74.9 | 4.74 |
 | SemanticKITTI | OpenSNAP: multi-domain decoder + token tuning | 56.8 | 67.7 | 71.9 | 76.9 | 4.72 |
+| UnderOneFacade (facade parts, zero-shot) | SNAP, positive clicks only | 9.9 | 10.6 | 11.0 | 11.3 | 9.91 |
+| UnderOneFacade (facade parts, zero-shot) | SNAP, corrective protocol (negatives ignored) | 9.9 | 10.0 | 10.1 | 10.1 | 9.92 |
+| UnderOneFacade (facade parts, zero-shot) | **OpenSNAP: test-time token tuning** | 9.9 | 20.6 | 26.2 | 46.2 | 9.65 |
+| UnderOneFacade (facade parts, zero-shot) | OpenSNAP: corrective decoder (multi-domain) | 9.9 | 22.7 | 28.5 | 29.5 | 9.65 |
+| UnderOneFacade (facade parts, zero-shot) | OpenSNAP: multi-domain decoder + token tuning | 9.8 | 25.7 | 37.4 | 49.4 | 9.52 |
 
-Corrective protocol: every click goes to the centre of the larger error region (positive on misses, negative on false positives). SNAP cannot use negative clicks. Token tuning: 30 Adam steps on the mask token over SNAP's frozen voxel embeddings, hyper-parameters chosen on ScanNet val only (aux/sweep_ttt_scannet_*.json).
+Corrective protocol: every click goes to the centre of the larger error region (positive on misses, negative on false positives). SNAP cannot use negative clicks. Token tuning: 30 Adam steps on the mask token over SNAP's frozen voxel embeddings, hyper-parameters chosen on ScanNet val only (aux/sweep_ttt_scannet_*.json). UnderOneFacade: test split, instances = 3D-connected components of window/door/balcony/molding/decoration/column/arch/stairs/blinds labels at 5 cm (>= 100 voxels; scripts/prep_facade_instances.py), 3 m crops.
 
 ### T5i · Backbone adaptation (LoRA in every PTv3 attention layer), positive clicks only
 

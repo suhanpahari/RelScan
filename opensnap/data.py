@@ -20,9 +20,11 @@ LABELSETS = {
     "semantickitti": ["car", "bicycle", "motorcycle", "truck", "other vehicle", "person", "bicyclist", "motorcyclist", "road",
                       "parking", "sidewalk", "other ground", "building", "fence", "vegetation", "trunk", "terrain", "pole",
                       "traffic sign"],
+    "underonefacade": ["wall", "window", "door", "balcony", "molding", "decoration", "column", "arch", "stairs", "ground surface",
+                       "terrain", "roof", "blinds", "interior", "other"],
 }
 DATA_DIRS = {"scannet": "scannet_3d", "matterport": "matterport_3d", "matterport160": "matterport_3d_160", "nuscenes": "nuscenes_official",
-             "semantickitti": "semantickitti"}
+             "semantickitti": "semantickitti", "underonefacade": "underonefacade_5cm"}
 
 
 def snap_train_vocab():

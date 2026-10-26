@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Classification>
+    <ClassificationClasses>
+        <Class ID="0" Favorite="false" Color="#CFCFCF" Name="VOID"/>
+        <Class ID="1" Favorite="false" Color="#FFF2CC" Name="Wall"/>
+        <Class ID="2" Favorite="false" Color="#8EA9DB" Name="Window"/>
+        <Class ID="3" Favorite="false" Color="#C65911" Name="Door"/>
+        <Class ID="4" Favorite="false" Color="#008080" Name="Balcony"/>
+        <Class ID="5" Favorite="false" Color="#B482DA" Name="Molding"/>
+        <Class ID="6" Favorite="false" Color="#00B0F0" Name="Deco"/>
+        <Class ID="7" Favorite="false" Color="#FF0000" Name="Column"/>
+        <Class ID="8" Favorite="false" Color="#305496" Name="Arch"/>
+        <Class ID="9" Favorite="false" Color="#BC8F8F" Name="Stairs"/>
+        <Class ID="10" Favorite="false" Color="#7CFC00" Name="Ground Surface"/>
+        <Class ID="11" Favorite="false" Color="#C6E0B4" Name="Terrain"/>
+        <Class ID="12" Favorite="false" Color="#A80000" Name="Roof"/>
+        <Class ID="13" Favorite="false" Color="#548235" Name="Blinds"/>
+        <Class ID="14" Favorite="false" Color="#FFFF00" Name="Interior"/>
+        <Class ID="15" Favorite="false" Color="#696969" Name="Other"/>
+    </ClassificationClasses>
+</Classification>
