@@ -137,6 +137,72 @@ def object_embeddings(frames, expert, pts, masks, top_k=5, scales=(0.0, 0.1, 0.2
     return F.normalize(out, dim=-1), nviews
 
 
+@torch.no_grad()
+def object_embeddings_3crop(frames, expert, pts, masks, top_k=5, min_vis=20, sub=4, dilate=7, pad=0.2, parts=False):
+    """SceneSplat's label collection per object view (arXiv 2503.18052, supp. A.1): the full frame f_g, a crop with
+    background f_l (bbox + pad), and a masked crop without background f_m (projected points dilated, the rest grey),
+    fused by agreement: r = cos(f_l, f_m), F_l = norm(r f_m + (1 - r) f_l), w_g = softmax over the objects of a frame of
+    cos(F_l, f_g), w_m = (1 - w_g) r, w_l = (1 - w_g)(1 - r); f_s = norm(w_g f_g + w_l f_l + w_m f_m), averaged over
+    views. masks: (M, N) bool over `pts`. Returns (M, D) and #views used."""
+    idx = np.arange(0, len(pts), sub)
+    vis, uv = frames.visibility(pts[idx])
+    mk = torch.from_numpy(masks[:, idx]).to(vis.device)
+    counts = vis.half() @ mk.half().T                                   # (F, M)
+    local, masked, owner, frame, cache = [], [], [], [], {}
+    for o in range(len(masks)):
+        c = counts[:, o].float()
+        for k in torch.argsort(c, descending=True)[:top_k].tolist():
+            if c[k] < min_vis:
+                break
+            sel = vis[k] & mk[o]
+            p = uv[k, sel].float().cpu().numpy()
+            lo, hi = np.percentile(p, 2, 0), np.percentile(p, 98, 0)
+            if hi[0] - lo[0] < 4 or hi[1] - lo[1] < 4:
+                continue
+            if k not in cache:
+                cache[k] = frames.color(k)
+            im = cache[k]
+            pw = (hi - lo) * pad + 4
+            local.append(im.crop((int(max(0, lo[0] - pw[0])), int(max(0, lo[1] - pw[1])),
+                                  int(min(frames.W, hi[0] + pw[0])), int(min(frames.H, hi[1] + pw[1])))))
+            m = torch.zeros(1, 1, frames.H, frames.W)
+            q = np.clip(np.round(p).astype(int), 0, [frames.W - 1, frames.H - 1])
+            m[0, 0, q[:, 1], q[:, 0]] = 1
+            m = F.max_pool2d(m, dilate, 1, dilate // 2)[0, 0].numpy() > 0
+            arr = np.asarray(im).copy()
+            arr[~m] = 127
+            masked.append(Image.fromarray(arr).crop((int(max(0, lo[0] - 4)), int(max(0, lo[1] - 4)),
+                                                     int(min(frames.W, hi[0] + 4)), int(min(frames.H, hi[1] + 4)))))
+            owner.append(o)
+            frame.append(k)
+    D = expert.text(["object"]).shape[1]
+    out = torch.zeros(len(masks), D, device=expert.device)
+    nviews = np.bincount(np.asarray(owner, int), minlength=len(masks)) if owner else np.zeros(len(masks), int)
+    if not owner:
+        return out, nviews
+    ks = sorted(set(frame))
+    fg = dict(zip(ks, expert.images([cache[k] for k in ks])))
+    fl, fm = expert.images(local), expert.images(masked)
+    r = (fl * fm).sum(-1, keepdim=True).clamp(min=0)
+    Fl = F.normalize(r * fm + (1 - r) * fl, dim=-1)
+    g = torch.stack([fg[k] for k in frame])
+    phi = (Fl * g).sum(-1)
+    fr = torch.tensor(frame, device=phi.device)
+    wg = torch.zeros_like(phi)
+    for k in ks:  # softmax over the object views sharing frame k
+        s = fr == k
+        wg[s] = phi[s].softmax(0)
+    wg = wg[:, None]
+    fs = F.normalize(wg * g + (1 - wg) * (1 - r) * fl + (1 - wg) * r * fm, dim=-1)
+    own = torch.tensor(owner, device=expert.device)
+    if parts:  # diagnostics: each component averaged over views
+        comp = dict(local=fl, masked=fm, fused_local=Fl, fused=fs, no_global=F.normalize((1 - r) * fl + r * fm, dim=-1),
+                    local_plus_masked=F.normalize(fl + fm, dim=-1))
+        return {k: F.normalize(torch.zeros_like(out).index_add_(0, own, v), dim=-1) for k, v in comp.items()}, nviews
+    out.index_add_(0, own, fs)
+    return F.normalize(out, dim=-1), nviews
+
+
 class VideoFrames:
     """Same interface as PosedFrames for a video reconstruction (VGGT cameras and metric depth from views.npz)."""
 

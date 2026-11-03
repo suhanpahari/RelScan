@@ -1,0 +1,23 @@
+[2026-11-03 10:17:21,200] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+[1/31] scene0000_00 objs=183 trunk=(81369, 1232)
+[2/31] scene0022_00 objs=84 trunk=(180013, 1232)
+[3/31] scene0043_00 objs=28 trunk=(130427, 1232)
+[4/31] scene0065_01 objs=26 trunk=(49044, 1232)
+[5/31] scene0089_01 objs=46 trunk=(112120, 1232)
+[6/31] scene0109_00 objs=75 trunk=(102001, 1232)
+OOM on scene0126_00, retry 1/10 in 180 s
+OOM on scene0126_00, retry 2/10 in 180 s
+OOM on scene0126_00, retry 3/10 in 180 s
+OOM on scene0126_00, retry 4/10 in 180 s
+OOM on scene0126_00, retry 5/10 in 180 s
+OOM on scene0126_00, retry 6/10 in 180 s
+OOM on scene0126_00, retry 7/10 in 180 s
+OOM on scene0126_00, retry 8/10 in 180 s
+OOM on scene0126_00, retry 9/10 in 180 s
+OOM on scene0126_00, retry 10/10 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_trunk.py", line 95, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_trunk.py", line 69, in main
+    raise RuntimeError(f"persistent OOM on {rec['scene']}")
+RuntimeError: persistent OOM on scene0126_00

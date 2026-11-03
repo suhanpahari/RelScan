@@ -1,0 +1,28 @@
+dev: 44 scenes, 396 queries (137 absent)
+  B cos        {"feat": "dense"}                        t=0.092  cgF1 12.7 IL_MCC 0.410 absFP 0.066
+  B sms        {"feat": "dense"}                        t=1.456  cgF1 12.0 IL_MCC 0.444 absFP 0.263
+  B label      {"image_w": 0.0}                         t=0.950  cgF1 15.7 IL_MCC 0.529 absFP 0.058
+  B ovql       {"image_w": 0.0}                         t=0.050  cgF1 15.0 IL_MCC 0.488 absFP 0.036
+  B cos        {"feat": "dense_max"}                    t=0.117  cgF1 11.3 IL_MCC 0.406 absFP 0.080
+  B sms        {"feat": "dense_max"}                    t=1.284  cgF1 9.9 IL_MCC 0.415 absFP 0.277
+  B cos        {"feat": "dense_p90"}                    t=0.113  cgF1 12.2 IL_MCC 0.403 absFP 0.058
+  B sms        {"feat": "dense_p90"}                    t=1.423  cgF1 11.8 IL_MCC 0.431 absFP 0.255
+  B cos        {"feat": "chorus"}                       t=-1.000  cgF1 0.0 IL_MCC 0.000 absFP 0.000
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 323, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 283, in main
+    t = tune(dev, name, kw, grid_for(dev, name, kw))
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 253, in grid_for
+    v = np.concatenate([lab.score(name, s, c, **kw) for s, c, _, _ in lab.queries[:400]])
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 253, in <listcomp>
+    v = np.concatenate([lab.score(name, s, c, **kw) for s, c, _, _ in lab.queries[:400]])
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 73, in score
+    self.cache[key] = getattr(self, "m_" + name)(self.recs[s], c, **kw).numpy()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 134, in m_sms
+    Lm = torch.stack([V.cosine(r, self.idx[q], feat) for q in self.classes], 1)
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/sets_lab.py", line 134, in <listcomp>
+    Lm = torch.stack([V.cosine(r, self.idx[q], feat) for q in self.classes], 1)
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/evidence.py", line 60, in cosine
+    return rec[feat][:, col].float()  # round-3 experts (dense_p90, image3c_*, chorus) are stored as cosines
+KeyError: 'chorus'

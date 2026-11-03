@@ -1,7 +1,8 @@
-"""UnderOneFacade voxelized scenes -> pointcept folders with pseudo-instances for interactive segmentation.
+"""UnderOneFacade / ArCH voxelized scenes -> pointcept folders with pseudo-instances for interactive segmentation.
 
-The benchmark has semantic labels only; each 3D-connected component of a facade element class (window, door,
-balcony, ...) at the voxel grid becomes one instance. Wall, ground, terrain, roof, interior and other stay unlabelled.
+Both benchmarks have semantic labels only; each 3D-connected component of a building element class (window, door,
+balcony, column, arch, ...) at the voxel grid becomes one instance. Wall, floor, ground, terrain, roof, interior and
+other stay unlabelled.
 """
 import argparse
 import glob
@@ -18,7 +19,8 @@ from scipy.spatial import cKDTree
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from opensnap import paths  # noqa: E402
 
-ELEMENTS = (1, 2, 3, 4, 5, 6, 7, 8, 12)  # window, door, balcony, molding, decoration, column, arch, stairs, blinds
+ELEMENTS = {"underonefacade": (1, 2, 3, 4, 5, 6, 7, 8, 12),  # window, door, balcony, molding, decoration, column, arch,
+            "arch": (0, 1, 2, 4, 6, 7)}                    # stairs, blinds | arch, column, molding, door/window, stairs, vault
 A = {}
 
 
@@ -28,7 +30,7 @@ def work(f):
     label = np.asarray(label).astype(np.int64)
     ins = np.full(len(coord), -1, np.int32)
     n = 0
-    for c in ELEMENTS:
+    for c in ELEMENTS[a.dataset]:
         idx = np.nonzero(label == c)[0]
         if len(idx) < a.min_voxels:
             continue
@@ -53,14 +55,16 @@ def work(f):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", default="underonefacade", choices=list(ELEMENTS))
     ap.add_argument("--split", default="test")
-    ap.add_argument("--src", default=os.path.join(paths.DOWNLOADS, "data", "underonefacade_5cm"))
-    ap.add_argument("--dst", default=os.path.join(paths.DOWNLOADS, "data", "pointcept", "underonefacade"))
+    ap.add_argument("--src", default="", help="default downloads/data/<dataset>_5cm")
+    ap.add_argument("--dst", default="", help="default downloads/data/pointcept/<dataset>")
     ap.add_argument("--radius", type=float, default=0.09)
     ap.add_argument("--min_voxels", type=int, default=100)
     ap.add_argument("--procs", type=int, default=8)
     a = ap.parse_args()
-    a.dst = os.path.join(a.dst, a.split)
+    a.src = a.src or os.path.join(paths.DOWNLOADS, "data", f"{a.dataset}_5cm")
+    a.dst = os.path.join(a.dst or os.path.join(paths.DOWNLOADS, "data", "pointcept", a.dataset), a.split)
     files = sorted(glob.glob(os.path.join(a.src, a.split, "*.pth")))
     A["args"] = a
     with Pool(a.procs) as p:

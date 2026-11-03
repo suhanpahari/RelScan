@@ -1,0 +1,332 @@
+[2026-11-03 18:19:42,128] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+[35/474] scene0054_00 instances=94
+[37/474] scene0056_00 instances=40
+[39/474] scene0059_00 instances=45
+[41/474] scene0062_00 instances=24
+[43/474] scene0068_00 instances=41
+[45/474] scene0070_00 instances=23
+[47/474] scene0072_00 instances=36
+[49/474] scene0075_00 instances=23
+[51/474] scene0079_00 instances=22
+[53/474] scene0082_00 instances=23
+[55/474] scene0087_00 instances=18
+[57/474] scene0091_00 instances=30
+[59/474] scene0094_00 instances=21
+[61/474] scene0098_00 instances=42
+[63/474] scene0102_00 instances=39
+[65/474] scene0104_00 instances=40
+[67/474] scene0107_00 instances=29
+[69/474] scene0110_00 instances=31
+[71/474] scene0113_00 instances=10
+[73/474] scene0116_00 instances=27
+[75/474] scene0119_00 instances=26
+[77/474] scene0121_00 instances=28
+[79/474] scene0124_00 instances=26
+[81/474] scene0127_00 instances=25
+[83/474] scene0130_00 instances=17
+[85/474] scene0133_00 instances=21
+[87/474] scene0136_00 instances=40
+[89/474] scene0138_00 instances=52
+[90/474] scene0140_00 instances=47
+[91/474] scene0142_00 instances=46
+[92/474] scene0143_00 instances=18
+[93/474] scene0145_00 instances=17
+[94/474] scene0148_00 instances=7
+[95/474] scene0150_00 instances=14
+[96/474] scene0152_00 instances=30
+[97/474] scene0155_00 instances=35
+[98/474] scene0156_00 instances=24
+[99/474] scene0157_00 instances=19
+[100/474] scene0158_00 instances=33
+[101/474] scene0160_00 instances=17
+[102/474] scene0161_00 instances=10
+[103/474] scene0162_00 instances=27
+[104/474] scene0165_00 instances=16
+[105/474] scene0166_00 instances=51
+[106/474] scene0167_00 instances=40
+[107/474] scene0170_00 instances=16
+[108/474] scene0172_00 instances=15
+[109/474] scene0174_00 instances=24
+[110/474] scene0175_00 instances=41
+[111/474] scene0176_00 instances=17
+[112/474] scene0177_00 instances=35
+[113/474] scene0178_00 instances=44
+[114/474] scene0180_00 instances=33
+[115/474] scene0181_00 instances=46
+[116/474] scene0182_00 instances=17
+[117/474] scene0183_00 instances=11
+[118/474] scene0185_00 instances=46
+[119/474] scene0186_00 instances=49
+[120/474] scene0188_00 instances=29
+[121/474] scene0189_00 instances=27
+[122/474] scene0190_00 instances=22
+[123/474] scene0191_00 instances=17
+[124/474] scene0194_00 instances=23
+[125/474] scene0197_00 instances=28
+[126/474] scene0199_00 instances=16
+[127/474] scene0200_00 instances=19
+[128/474] scene0201_00 instances=30
+[129/474] scene0202_00 instances=14
+[130/474] scene0205_00 instances=16
+[131/474] scene0206_00 instances=35
+[132/474] scene0210_00 instances=30
+[133/474] scene0211_00 instances=45
+[134/474] scene0212_00 instances=25
+[135/474] scene0214_00 instances=37
+[136/474] scene0216_00 instances=13
+[137/474] scene0218_00 instances=61
+[138/474] scene0219_00 instances=4
+[139/474] scene0223_00 instances=23
+[140/474] scene0224_00 instances=14
+[141/474] scene0225_00 instances=41
+[142/474] scene0226_00 instances=21
+[143/474] scene0228_00 instances=10
+[144/474] scene0229_00 instances=32
+[145/474] scene0230_00 instances=30
+[146/474] scene0232_00 instances=23
+[147/474] scene0234_00 instances=16
+[148/474] scene0235_00 instances=40
+[149/474] scene0236_00 instances=23
+[150/474] scene0237_00 instances=13
+[151/474] scene0238_00 instances=44
+[152/474] scene0240_00 instances=36
+[153/474] scene0242_00 instances=20
+[154/474] scene0243_00 instances=25
+[155/474] scene0245_00 instances=45
+[156/474] scene0247_00 instances=57
+[157/474] scene0248_00 instances=15
+[158/474] scene0252_00 instances=16
+[159/474] scene0253_00 instances=21
+[160/474] scene0254_00 instances=32
+[161/474] scene0255_00 instances=22
+[162/474] scene0258_00 instances=14
+[163/474] scene0260_00 instances=26
+[164/474] scene0261_00 instances=42
+[165/474] scene0262_00 instances=27
+[166/474] scene0264_00 instances=35
+[167/474] scene0266_00 instances=27
+[168/474] scene0268_00 instances=30
+[169/474] scene0269_00 instances=4
+[170/474] scene0270_00 instances=44
+[171/474] scene0272_00 instances=18
+[172/474] scene0273_00 instances=18
+[173/474] scene0274_00 instances=18
+[174/474] scene0275_00 instances=30
+[175/474] scene0279_00 instances=53
+[176/474] scene0280_00 instances=23
+[177/474] scene0281_00 instances=31
+[178/474] scene0283_00 instances=18
+[179/474] scene0284_00 instances=17
+[180/474] scene0285_00 instances=29
+[181/474] scene0287_00 instances=14
+[182/474] scene0289_00 instances=31
+[183/474] scene0290_00 instances=25
+[184/474] scene0291_00 instances=40
+[185/474] scene0293_00 instances=13
+[186/474] scene0294_00 instances=28
+[187/474] scene0295_00 instances=18
+[188/474] scene0296_00 instances=54
+[189/474] scene0298_00 instances=16
+[190/474] scene0299_00 instances=17
+[191/474] scene0301_00 instances=37
+[192/474] scene0303_00 instances=21
+[193/474] scene0306_00 instances=37
+[194/474] scene0308_00 instances=31
+[195/474] scene0310_00 instances=40
+[196/474] scene0311_00 instances=22
+[197/474] scene0312_00 instances=17
+[198/474] scene0315_00 instances=48
+[199/474] scene0317_00 instances=20
+[200/474] scene0318_00 instances=6
+[201/474] scene0319_00 instances=21
+[202/474] scene0320_00 instances=49
+[203/474] scene0322_00 instances=10
+[204/474] scene0323_00 instances=27
+[205/474] scene0324_00 instances=14
+[206/474] scene0325_00 instances=28
+[207/474] scene0326_00 instances=18
+[208/474] scene0327_00 instances=50
+[209/474] scene0331_00 instances=62
+[210/474] scene0333_00 instances=19
+[211/474] scene0335_00 instances=57
+[212/474] scene0336_00 instances=74
+[213/474] scene0337_00 instances=6
+[214/474] scene0339_00 instances=15
+[215/474] scene0340_00 instances=40
+[216/474] scene0341_00 instances=59
+[217/474] scene0344_00 instances=10
+[218/474] scene0345_00 instances=36
+[219/474] scene0346_00 instances=18
+[220/474] scene0347_00 instances=28
+[221/474] scene0348_00 instances=30
+[222/474] scene0349_00 instances=21
+[223/474] scene0350_00 instances=42
+[224/474] scene0352_00 instances=36
+[225/474] scene0358_00 instances=28
+[226/474] scene0360_00 instances=17
+[227/474] scene0361_00 instances=33
+[228/474] scene0362_00 instances=29
+[229/474] scene0363_00 instances=19
+[230/474] scene0364_00 instances=17
+[231/474] scene0365_00 instances=27
+[232/474] scene0366_00 instances=27
+[233/474] scene0367_00 instances=17
+[234/474] scene0368_00 instances=21
+[235/474] scene0369_00 instances=31
+[236/474] scene0370_00 instances=43
+[237/474] scene0371_00 instances=14
+[238/474] scene0372_00 instances=29
+[239/474] scene0373_00 instances=14
+[240/474] scene0374_00 instances=27
+[241/474] scene0375_00 instances=23
+[242/474] scene0376_00 instances=16
+[243/474] scene0379_00 instances=41
+[244/474] scene0381_00 instances=11
+[245/474] scene0383_00 instances=31
+[246/474] scene0384_00 instances=79
+[247/474] scene0385_00 instances=26
+[248/474] scene0386_00 instances=26
+[249/474] scene0387_00 instances=20
+[250/474] scene0388_00 instances=20
+[251/474] scene0390_00 instances=32
+[252/474] scene0391_00 instances=32
+[253/474] scene0392_00 instances=44
+[254/474] scene0393_00 instances=33
+OOM on scene0394_00, retry 1 in 180 s
+OOM on scene0394_00, retry 2 in 180 s
+OOM on scene0394_00, retry 3 in 180 s
+OOM on scene0394_00, retry 4 in 180 s
+OOM on scene0394_00, retry 5 in 180 s
+OOM on scene0394_00, retry 6 in 180 s
+OOM on scene0394_00, retry 7 in 180 s
+OOM on scene0394_00, retry 8 in 180 s
+OOM on scene0394_00, retry 9 in 180 s
+OOM on scene0394_00, retry 10 in 180 s
+OOM on scene0394_00, retry 11 in 180 s
+OOM on scene0394_00, retry 12 in 180 s
+[255/474] scene0394_00 instances=79
+[256/474] scene0395_00 instances=42
+[257/474] scene0396_00 instances=16
+[258/474] scene0397_00 instances=33
+[259/474] scene0398_00 instances=25
+[260/474] scene0399_00 instances=20
+[261/474] scene0401_00 instances=32
+[262/474] scene0402_00 instances=16
+[263/474] scene0403_00 instances=69
+[264/474] scene0404_00 instances=39
+[265/474] scene0405_00 instances=21
+[266/474] scene0407_00 instances=17
+[267/474] scene0408_00 instances=76
+[268/474] scene0409_00 instances=34
+[269/474] scene0410_00 instances=23
+[270/474] scene0411_00 instances=37
+[271/474] scene0413_00 instances=32
+[272/474] scene0415_00 instances=30
+[273/474] scene0416_00 instances=54
+[274/474] scene0417_00 instances=16
+[275/474] scene0418_00 instances=28
+[276/474] scene0419_00 instances=72
+[277/474] scene0420_00 instances=43
+[278/474] scene0422_00 instances=49
+[279/474] scene0424_00 instances=51
+[280/474] scene0425_00 instances=28
+[281/474] scene0428_00 instances=22
+[282/474] scene0429_00 instances=33
+[283/474] scene0431_00 instances=25
+[284/474] scene0433_00 instances=25
+[285/474] scene0434_00 instances=30
+[286/474] scene0436_00 instances=27
+[287/474] scene0437_00 instances=13
+[288/474] scene0438_00 instances=23
+[289/474] scene0439_00 instances=37
+[290/474] scene0440_00 instances=30
+[291/474] scene0442_00 instances=15
+[292/474] scene0443_00 instances=30
+[293/474] scene0444_00 instances=11
+[294/474] scene0445_00 instances=15
+[295/474] scene0446_00 instances=29
+[296/474] scene0447_00 instances=32
+[297/474] scene0448_00 instances=35
+[298/474] scene0450_00 instances=13
+[299/474] scene0451_00 instances=61
+[300/474] scene0452_00 instances=35
+[301/474] scene0453_00 instances=42
+[302/474] scene0454_00 instances=10
+[303/474] scene0455_00 instances=32
+[304/474] scene0456_00 instances=22
+[305/474] scene0457_00 instances=27
+[306/474] scene0459_00 instances=28
+[307/474] scene0460_00 instances=20
+[308/474] scene0463_00 instances=25
+[309/474] scene0464_00 instances=58
+[310/474] scene0465_00 instances=45
+[311/474] scene0466_00 instances=59
+[312/474] scene0467_00 instances=35
+[313/474] scene0468_00 instances=28
+[314/474] scene0469_00 instances=41
+[315/474] scene0471_00 instances=13
+[316/474] scene0472_00 instances=32
+[317/474] scene0473_00 instances=21
+[318/474] scene0475_00 instances=39
+[319/474] scene0476_00 instances=33
+[320/474] scene0477_00 instances=60
+[321/474] scene0478_00 instances=18
+[322/474] scene0479_00 instances=34
+[323/474] scene0480_00 instances=21
+[324/474] scene0481_00 instances=53
+[325/474] scene0482_00 instances=22
+[326/474] scene0483_00 instances=25
+[327/474] scene0484_00 instances=6
+[328/474] scene0485_00 instances=15
+[329/474] scene0486_00 instances=46
+[330/474] scene0487_00 instances=32
+[331/474] scene0489_00 instances=33
+[332/474] scene0491_00 instances=13
+[333/474] scene0493_00 instances=15
+[334/474] scene0495_00 instances=33
+OOM on scene0497_00, retry 1 in 180 s
+OOM on scene0497_00, retry 2 in 180 s
+OOM on scene0497_00, retry 3 in 180 s
+OOM on scene0497_00, retry 4 in 180 s
+OOM on scene0497_00, retry 5 in 180 s
+OOM on scene0497_00, retry 6 in 180 s
+OOM on scene0497_00, retry 7 in 180 s
+OOM on scene0497_00, retry 8 in 180 s
+OOM on scene0497_00, retry 9 in 180 s
+OOM on scene0497_00, retry 10 in 180 s
+OOM on scene0497_00, retry 11 in 180 s
+OOM on scene0497_00, retry 12 in 180 s
+OOM on scene0497_00, retry 13 in 180 s
+OOM on scene0497_00, retry 14 in 180 s
+OOM on scene0497_00, retry 15 in 180 s
+OOM on scene0497_00, retry 16 in 180 s
+OOM on scene0497_00, retry 17 in 180 s
+OOM on scene0497_00, retry 18 in 180 s
+OOM on scene0497_00, retry 19 in 180 s
+OOM on scene0497_00, retry 20 in 180 s
+OOM on scene0497_00, retry 21 in 180 s
+OOM on scene0497_00, retry 22 in 180 s
+OOM on scene0497_00, retry 23 in 180 s
+OOM on scene0497_00, retry 24 in 180 s
+OOM on scene0497_00, retry 25 in 180 s
+OOM on scene0497_00, retry 26 in 180 s
+OOM on scene0497_00, retry 27 in 180 s
+OOM on scene0497_00, retry 28 in 180 s
+OOM on scene0497_00, retry 29 in 180 s
+OOM on scene0497_00, retry 30 in 180 s
+OOM on scene0497_00, retry 31 in 180 s
+OOM on scene0497_00, retry 32 in 180 s
+OOM on scene0497_00, retry 33 in 180 s
+OOM on scene0497_00, retry 34 in 180 s
+OOM on scene0497_00, retry 35 in 180 s
+OOM on scene0497_00, retry 36 in 180 s
+OOM on scene0497_00, retry 37 in 180 s
+OOM on scene0497_00, retry 38 in 180 s
+OOM on scene0497_00, retry 39 in 180 s
+OOM on scene0497_00, retry 40 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 77, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 57, in main
+    raise RuntimeError(f"persistent OOM on {scene}")
+RuntimeError: persistent OOM on scene0497_00

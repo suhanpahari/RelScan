@@ -1,0 +1,19 @@
+train rows 894774, positives 1293, features 40
+DEV scannet  logreg 0.5  None  cgF1  21.8 IL_MCC 0.542 pmF1 0.402 absFP 0.005
+DEV scannet  logreg ef1  None  cgF1  24.6 IL_MCC 0.561 pmF1 0.439 absFP 0.009
+DEV scannet  logreg 0.3  None  cgF1  27.2 IL_MCC 0.574 pmF1 0.474 absFP 0.014
+DEV scannet  logreg 0.2  None  cgF1  29.2 IL_MCC 0.584 pmF1 0.500 absFP 0.025
+DEV scannet  logreg 0.1  None  cgF1  30.0 IL_MCC 0.587 pmF1 0.510 absFP 0.045
+DEV scannet  logreg ef1  drop  cgF1  24.5 IL_MCC 0.561 pmF1 0.437 absFP 0.009
+DEV scannet  logreg ef1  host  cgF1  24.3 IL_MCC 0.561 pmF1 0.434 absFP 0.009
+DEV scannet  logreg 0.2  drop  cgF1  29.2 IL_MCC 0.584 pmF1 0.499 absFP 0.025
+DEV scannet  logreg 0.2  host  cgF1  29.0 IL_MCC 0.584 pmF1 0.496 absFP 0.025
+DEV scannet  gbm    0.5  None  cgF1  17.7 IL_MCC 0.485 pmF1 0.365 absFP 0.033
+DEV scannet  gbm    ef1  None  cgF1  18.9 IL_MCC 0.500 pmF1 0.378 absFP 0.035
+DEV scannet  gbm    0.3  None  cgF1  20.3 IL_MCC 0.519 pmF1 0.392 absFP 0.039
+DEV scannet  gbm    0.2  None  cgF1  21.0 IL_MCC 0.515 pmF1 0.409 absFP 0.048
+DEV scannet  gbm    0.1  None  cgF1  21.4 IL_MCC 0.530 pmF1 0.404 absFP 0.052
+DEV scannet  gbm    ef1  drop  cgF1  18.8 IL_MCC 0.500 pmF1 0.377 absFP 0.035
+DEV scannet  gbm    ef1  host  cgF1  18.9 IL_MCC 0.500 pmF1 0.378 absFP 0.035
+DEV scannet  gbm    0.2  drop  cgF1  21.0 IL_MCC 0.515 pmF1 0.407 absFP 0.048
+DEV scannet  gbm    0.2  host  cgF1  20.9 IL_MCC 0.515 pmF1 0.406 absFP 0.048

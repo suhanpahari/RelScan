@@ -1,0 +1,2 @@
+[2026-11-03 22:51:36,213] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+OOM on scene0497_00, retry 1 in 180 s

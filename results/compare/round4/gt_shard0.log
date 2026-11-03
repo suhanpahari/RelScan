@@ -1,0 +1,34 @@
+[2026-11-03 11:22:35,383] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+[1/237] scene0001_00 instances=23
+[2/237] scene0004_00 instances=14
+[3/237] scene0007_00 instances=26
+[4/237] scene0009_00 instances=32
+[5/237] scene0013_00 instances=6
+[6/237] scene0016_00 instances=50
+[7/237] scene0020_00 instances=45
+[8/237] scene0023_00 instances=29
+[9/237] scene0027_00 instances=19
+[10/237] scene0029_00 instances=26
+[11/237] scene0033_00 instances=25
+[12/237] scene0035_00 instances=17
+[13/237] scene0038_00 instances=23
+[14/237] scene0040_00 instances=74
+[15/237] scene0044_00 instances=13
+[16/237] scene0048_00 instances=17
+[17/237] scene0051_00 instances=51
+OOM on scene0054_00, retry 1/10 in 180 s
+OOM on scene0054_00, retry 2/10 in 180 s
+OOM on scene0054_00, retry 3/10 in 180 s
+OOM on scene0054_00, retry 4/10 in 180 s
+OOM on scene0054_00, retry 5/10 in 180 s
+OOM on scene0054_00, retry 6/10 in 180 s
+OOM on scene0054_00, retry 7/10 in 180 s
+OOM on scene0054_00, retry 8/10 in 180 s
+OOM on scene0054_00, retry 9/10 in 180 s
+OOM on scene0054_00, retry 10/10 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 77, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 57, in main
+    raise RuntimeError(f"persistent OOM on {scene}")
+RuntimeError: persistent OOM on scene0054_00

@@ -1,0 +1,17 @@
+[2026-11-03 10:17:21,191] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+OOM on WC_1, retry 1/10 in 180 s
+OOM on WC_1, retry 2/10 in 180 s
+OOM on WC_1, retry 3/10 in 180 s
+OOM on WC_1, retry 4/10 in 180 s
+OOM on WC_1, retry 5/10 in 180 s
+OOM on WC_1, retry 6/10 in 180 s
+OOM on WC_1, retry 7/10 in 180 s
+OOM on WC_1, retry 8/10 in 180 s
+OOM on WC_1, retry 9/10 in 180 s
+OOM on WC_1, retry 10/10 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_trunk.py", line 95, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_trunk.py", line 69, in main
+    raise RuntimeError(f"persistent OOM on {rec['scene']}")
+RuntimeError: persistent OOM on WC_1

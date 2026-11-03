@@ -15,8 +15,10 @@ from opensnap import paths  # noqa: E402
 
 DATA = {"s3dis": ("pointcept/s3dis", ["Area_5"]), "scannet": ("pointcept/scannet", ["val"]),
         "nuscenes": ("pointcept/nuscenes", ["val"]), "semantickitti": ("pointcept/semantickitti", ["val"]),
-        "replica": ("pointcept/replica", ["all"]), "underonefacade": ("pointcept/underonefacade", ["test"])}
-STRUCT = {"s3dis": {0, 1, 2}, "scannet": set(), "nuscenes": set(), "semantickitti": set(), "replica": set(), "underonefacade": set()}
+        "replica": ("pointcept/replica", ["all"]), "underonefacade": ("pointcept/underonefacade", ["test"]),
+        "arch": ("pointcept/arch", ["test"])}
+STRUCT = {"s3dis": {0, 1, 2}, "scannet": set(), "nuscenes": set(), "semantickitti": set(), "replica": set(), "underonefacade": set(),
+          "arch": set()}
 
 
 def load(path, use_color, stuff=0):

@@ -22,9 +22,11 @@ LABELSETS = {
                       "traffic sign"],
     "underonefacade": ["wall", "window", "door", "balcony", "molding", "decoration", "column", "arch", "stairs", "ground surface",
                        "terrain", "roof", "blinds", "interior", "other"],
+    # ArCH heritage benchmark ids 0..8; id 9 "other" is void, as the authors advise
+    "arch": ["arch", "column", "molding", "floor", "door or window", "wall", "stairs", "vault", "roof"],
 }
 DATA_DIRS = {"scannet": "scannet_3d", "matterport": "matterport_3d", "matterport160": "matterport_3d_160", "nuscenes": "nuscenes_official",
-             "semantickitti": "semantickitti", "underonefacade": "underonefacade_5cm"}
+             "semantickitti": "semantickitti", "underonefacade": "underonefacade_5cm", "arch": "arch_5cm"}
 
 
 def snap_train_vocab():

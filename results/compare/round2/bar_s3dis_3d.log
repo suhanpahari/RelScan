@@ -1,0 +1,7 @@
+dev: 44 scenes, 396 queries (137 absent)
+  B cos        {"feat": "dense"}                        t=0.092  cgF1 12.7 IL_MCC 0.410 absFP 0.066
+  B sms        {"feat": "dense"}                        t=1.456  cgF1 11.8 IL_MCC 0.440 absFP 0.263
+  B label      {"image_w": 0.0}                         t=0.950  cgF1 15.6 IL_MCC 0.529 absFP 0.058
+  B ovql       {"image_w": 0.0}                         t=0.050  cgF1 14.9 IL_MCC 0.488 absFP 0.036
+  C ovql       {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 16.5 IL_MCC 0.431 absFP 0.007
+chosen on dev: candidate ["ovql", {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0}] vs baseline ["label", {"image_w": 0.0}]

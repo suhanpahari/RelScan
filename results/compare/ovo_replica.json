@@ -1,0 +1,86 @@
+{
+ "exp": "../downloads/competitors/OVO/data/output/Replica/ovo_full",
+ "results": {
+  "mIoU": 0.274091690839553,
+  "mAcc": 0.39917267010458135,
+  "AP": 0.112562284474822,
+  "AP50": 0.19538258534005803,
+  "AP25": 0.2799101879920984
+ },
+ "scenes": {
+  "office0": {
+   "n_instances": 144
+  },
+  "office1": {
+   "n_instances": 80
+  },
+  "office2": {
+   "n_instances": 131
+  },
+  "office3": {
+   "n_instances": 210
+  },
+  "office4": {
+   "n_instances": 134
+  },
+  "room0": {
+   "n_instances": 149
+  },
+  "room1": {
+   "n_instances": 91
+  },
+  "room2": {
+   "n_instances": 126
+  }
+ },
+ "per_class_AP": {
+  "basket": 0.0,
+  "bed": 0.0,
+  "bench": 0.2175925925925926,
+  "bin": 0.4127413019079686,
+  "blanket": 0.027777777777777776,
+  "blinds": 0.2617037037037037,
+  "book": 0.0,
+  "bottle": 0.020833333333333332,
+  "box": 0.0,
+  "bowl": 0.0,
+  "camera": 0.0,
+  "cabinet": 0.4629629629629629,
+  "candle": 0.0,
+  "chair": 0.11982598137981612,
+  "clock": 0.5833333333333334,
+  "cloth": 0.3333333333333333,
+  "comforter": 0.0,
+  "cushion": 0.23821394654727987,
+  "desk": 0.0,
+  "desk organizer": 0.0,
+  "door": 0.28689373897707227,
+  "indoor plant": 0.0,
+  "lamp": 0.03586125808348031,
+  "monitor": 0.0,
+  "nightstand": 0.3333333333333333,
+  "panel": 0.0,
+  "picture": 0.9027777777777778,
+  "pillar": 0.0,
+  "pillow": 0.3713231414756469,
+  "pipe": 0.0,
+  "plant stand": 0.0,
+  "plate": 0.0,
+  "pot": 0.0,
+  "sculpture": 0.0,
+  "shelf": 0.0,
+  "sofa": 0.01690491661251895,
+  "stool": 0.34074074074074073,
+  "switch": 0.0,
+  "table": 0.1273688477656357,
+  "tablet": 0.0,
+  "tissue paper": 0.11805555555555555,
+  "tv screen": 0.0,
+  "tv stand": 0.0,
+  "vase": 0.15441203417393892,
+  "vent": 0.0,
+  "wall plug": 0.0,
+  "window": 0.037000043423654524,
+  "rug": 0.0
+ }
+}

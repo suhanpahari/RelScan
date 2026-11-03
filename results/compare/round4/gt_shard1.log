@@ -1,0 +1,68 @@
+[2026-11-03 11:22:35,382] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+[1/237] scene0003_00 instances=21
+[2/237] scene0005_00 instances=17
+OOM on scene0008_00, retry 1/10 in 180 s
+OOM on scene0008_00, retry 2/10 in 180 s
+OOM on scene0008_00, retry 3/10 in 180 s
+OOM on scene0008_00, retry 4/10 in 180 s
+OOM on scene0008_00, retry 5/10 in 180 s
+OOM on scene0008_00, retry 6/10 in 180 s
+OOM on scene0008_00, retry 7/10 in 180 s
+[3/237] scene0008_00 instances=31
+[4/237] scene0010_00 instances=66
+[5/237] scene0014_00 instances=34
+[6/237] scene0018_00 instances=23
+[7/237] scene0021_00 instances=11
+[8/237] scene0026_00 instances=33
+[9/237] scene0028_00 instances=20
+[10/237] scene0032_00 instances=14
+[11/237] scene0034_00 instances=49
+[12/237] scene0037_00 instances=28
+[13/237] scene0039_00 instances=16
+[14/237] scene0042_00 instances=18
+[15/237] scene0047_00 instances=42
+[16/237] scene0049_00 instances=34
+[17/237] scene0053_00 instances=11
+[18/237] scene0055_00 instances=13
+[19/237] scene0058_00 instances=40
+[20/237] scene0060_00 instances=23
+[21/237] scene0066_00 instances=37
+[22/237] scene0069_00 instances=10
+[23/237] scene0071_00 instances=7
+[24/237] scene0074_00 instances=27
+[25/237] scene0076_00 instances=30
+[26/237] scene0080_00 instances=25
+[27/237] scene0083_00 instances=16
+[28/237] scene0090_00 instances=18
+[29/237] scene0093_00 instances=25
+[30/237] scene0097_00 instances=22
+[31/237] scene0099_00 instances=11
+[32/237] scene0103_00 instances=14
+[33/237] scene0105_00 instances=17
+[34/237] scene0108_00 instances=34
+[35/237] scene0112_00 instances=17
+[36/237] scene0115_00 instances=13
+[37/237] scene0117_00 instances=41
+[38/237] scene0120_00 instances=25
+[39/237] scene0122_00 instances=17
+[40/237] scene0125_00 instances=7
+[41/237] scene0129_00 instances=34
+[42/237] scene0132_00 instances=28
+[43/237] scene0134_00 instances=16
+[44/237] scene0137_00 instances=35
+OOM on scene0140_00, retry 1/10 in 180 s
+OOM on scene0140_00, retry 2/10 in 180 s
+OOM on scene0140_00, retry 3/10 in 180 s
+OOM on scene0140_00, retry 4/10 in 180 s
+OOM on scene0140_00, retry 5/10 in 180 s
+OOM on scene0140_00, retry 6/10 in 180 s
+OOM on scene0140_00, retry 7/10 in 180 s
+OOM on scene0140_00, retry 8/10 in 180 s
+OOM on scene0140_00, retry 9/10 in 180 s
+OOM on scene0140_00, retry 10/10 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 77, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_gt.py", line 57, in main
+    raise RuntimeError(f"persistent OOM on {scene}")
+RuntimeError: persistent OOM on scene0140_00

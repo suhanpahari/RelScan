@@ -124,6 +124,40 @@ def load_replica(scene, mesh_only=False):
     return coord, verts, sem, gt, "eval", coord
 
 
+@torch.no_grad()
+def gt_proposals(m, coord, verts, gt, match, min_points):
+    """Oracle proposals (ablation only): one mask per ground-truth instance, a voxel belonging to the instance that holds
+    most of its points. The segmenter token comes from one click at the instance voxel nearest to its centroid; the mask
+    itself is the ground truth and the predicted quality is set to 1."""
+    from scipy.spatial import cKDTree
+    from opensnap.core import Proposals
+    g = gt if verts is coord else gt[cKDTree(verts).query(match, k=1, workers=8)[1]]
+    inv = m.scene["inverse"].cpu().numpy()
+    V = len(m.scene["vcoord"])
+    pair, cnt = np.unique(np.stack([inv, g], 1), axis=0, return_counts=True)
+    order = np.lexsort((-cnt, pair[:, 0]))
+    first = np.r_[True, pair[order[1:], 0] != pair[order[:-1], 0]]
+    vgt = np.zeros(V, np.int64)
+    vgt[pair[order[first], 0]] = pair[order[first], 1]
+    vc = m.scene["vcoord"]
+    masks, prompts = [], []
+    for k in np.unique(vgt[vgt > 0]):
+        idx = np.nonzero(vgt == k)[0]
+        if len(idx) < min_points:
+            continue
+        mk = torch.zeros(V, dtype=torch.bool, device=vc.device)
+        mk[torch.as_tensor(idx, device=vc.device)] = True
+        pts = vc[mk]
+        masks.append(mk)
+        prompts.append(pts[torch.cdist(pts.mean(0, keepdim=True), pts).argmin()][None])
+    if not masks:
+        return m.propose()
+    prompts = torch.stack(prompts)
+    tokens = torch.cat([m.snap.decode(prompts[i:i + 64])[1] for i in range(0, len(prompts), 64)])
+    logits = torch.stack(masks).float() * 10 - 5
+    return Proposals(logits, tokens, torch.ones(len(masks), device=vc.device), prompts)
+
+
 def worker(rank, gpu, scenes, args, queue):
     try:
         _worker(rank, gpu, scenes, args, queue)
@@ -165,7 +199,8 @@ def _worker(rank, gpu, scenes, args, queue):
         t0 = time.time()
         m.encode(coord)
         props = {"c2f": lambda: m.propose_c2f(v0=args.c2f_v0, levels=args.c2f_levels), "fps": m.propose,
-                 "union": lambda: m.propose_union(v0=args.c2f_v0, levels=args.c2f_levels)}[args.proposals]()
+                 "union": lambda: m.propose_union(v0=args.c2f_v0, levels=args.c2f_levels),
+                 "gt": lambda: gt_proposals(m, coord, verts, gt, match, args.min_points)}[args.proposals]()
         n_snap = len(props.scores)
         if args.lift2d:
             from opensnap.lift2d import lift, merge_proposals
@@ -266,7 +301,7 @@ def main():
     ap.add_argument("--openscene_ckpt", default="../downloads/ckpt/matterport_openseg.pth.tar")
     ap.add_argument("--feature", default="openseg")
     ap.add_argument("--dense_voxel", type=float, default=0.02)
-    ap.add_argument("--proposals", default="c2f", choices=["fps", "c2f", "union"])
+    ap.add_argument("--proposals", default="c2f", choices=["fps", "c2f", "union", "gt"])
     ap.add_argument("--c2f_v0", type=float, default=0.8)
     ap.add_argument("--c2f_levels", type=int, default=3)
     ap.add_argument("--max_dist", type=float, default=0.05)

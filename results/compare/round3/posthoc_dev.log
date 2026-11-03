@@ -1,0 +1,33 @@
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[1/31] scene0000_00 objs=183
+[2/31] scene0022_00 objs=84
+[3/31] scene0043_00 objs=28
+[4/31] scene0065_01 objs=26
+[5/31] scene0089_01 objs=46
+[6/31] scene0109_00 objs=75
+[7/31] scene0126_00 objs=116
+[8/31] scene0151_00 objs=112
+[9/31] scene0171_00 objs=35
+[10/31] scene0195_01 objs=66
+[11/31] scene0215_01 objs=74
+[12/31] scene0241_02 objs=95
+[13/31] scene0265_00 objs=39
+[14/31] scene0286_00 objs=130
+[15/31] scene0305_01 objs=168
+[16/31] scene0332_02 objs=33
+[17/31] scene0359_01 objs=25
+[18/31] scene0380_01 objs=79
+[19/31] scene0400_00 objs=30
+[20/31] scene0421_00 objs=227
+[21/31] scene0449_00 objs=50
+[22/31] scene0470_01 objs=25
+[23/31] scene0492_01 objs=61
+[24/31] scene0515_01 objs=215
+[25/31] scene0539_00 objs=70
+[26/31] scene0567_00 objs=61
+[27/31] scene0588_01 objs=84
+[28/31] scene0614_00 objs=100
+[29/31] scene0638_00 objs=9
+[30/31] scene0673_00 objs=152
+[31/31] scene0706_00 objs=97
+IMAGE_POSTHOC_DONE

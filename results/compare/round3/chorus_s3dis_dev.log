@@ -1,0 +1,49 @@
+[2026-11-03 08:14:34,798] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+OOM on WC_1, retry 1/10 in 180 s
+OOM on WC_1, retry 2/10 in 180 s
+[1/44] WC_1 objs=82 points=282998
+[2/44] conferenceRoom_1 objs=56 points=290216
+[3/44] conferenceRoom_2 objs=83 points=399568
+[4/44] copyRoom_1 objs=67 points=131619
+[5/44] hallway_1 objs=42 points=87249
+[6/44] hallway_2 objs=25 points=143839
+[7/44] hallway_3 objs=28 points=93113
+[8/44] hallway_4 objs=39 points=92912
+[9/44] hallway_5 objs=31 points=117059
+[10/44] hallway_6 objs=50 points=970936
+[11/44] hallway_7 objs=44 points=840944
+[12/44] hallway_8 objs=65 points=316934
+[13/44] office_1 objs=52 points=224858
+[14/44] office_10 objs=61 points=204285
+[15/44] office_11 objs=77 points=210914
+[16/44] office_12 objs=102 points=203882
+[17/44] office_13 objs=75 points=175999
+[18/44] office_14 objs=85 points=170470
+[19/44] office_15 objs=51 points=119666
+[20/44] office_16 objs=98 points=360834
+[21/44] office_17 objs=68 points=229479
+[22/44] office_18 objs=107 points=204219
+[23/44] office_19 objs=63 points=214746
+[24/44] office_2 objs=53 points=231731
+[25/44] office_20 objs=84 points=223719
+[26/44] office_21 objs=115 points=226444
+[27/44] office_22 objs=103 points=214446
+[28/44] office_23 objs=38 points=219607
+[29/44] office_24 objs=60 points=215717
+[30/44] office_25 objs=81 points=204229
+[31/44] office_26 objs=74 points=209007
+[32/44] office_27 objs=75 points=215617
+[33/44] office_28 objs=56 points=185633
+[34/44] office_29 objs=82 points=129607
+[35/44] office_3 objs=65 points=216266
+[36/44] office_30 objs=125 points=490294
+[37/44] office_31 objs=95 points=981105
+[38/44] office_4 objs=48 points=157869
+[39/44] office_5 objs=65 points=165288
+[40/44] office_6 objs=76 points=157922
+[41/44] office_7 objs=76 points=164932
+[42/44] office_8 objs=72 points=212572
+[43/44] office_9 objs=81 points=210920
+[44/44] pantry_1 objs=60 points=131055
+CHORUS_DONE

@@ -1,0 +1,14 @@
+dev: 44 scenes, 396 queries (137 absent)
+  B cos        {"feat": "dense"}                        t=0.092  cgF1 12.7 IL_MCC 0.410 absFP 0.066
+  B sms        {"feat": "dense"}                        t=1.456  cgF1 12.0 IL_MCC 0.444 absFP 0.263
+  B label      {"image_w": 0.0}                         t=0.950  cgF1 15.7 IL_MCC 0.529 absFP 0.058
+  B ovql       {"image_w": 0.0}                         t=0.050  cgF1 15.0 IL_MCC 0.488 absFP 0.036
+  B cos        {"feat": "dense_max"}                    t=0.117  cgF1 11.3 IL_MCC 0.406 absFP 0.080
+  B sms        {"feat": "dense_max"}                    t=1.284  cgF1 9.9 IL_MCC 0.415 absFP 0.277
+  B cos        {"feat": "dense_p90"}                    t=0.113  cgF1 12.2 IL_MCC 0.403 absFP 0.058
+  B sms        {"feat": "dense_p90"}                    t=1.423  cgF1 11.8 IL_MCC 0.431 absFP 0.255
+  B cos        {"feat": "chorus"}                       t=0.103  cgF1 13.0 IL_MCC 0.405 absFP 0.263
+  B sms        {"feat": "chorus"}                       t=1.293  cgF1 16.7 IL_MCC 0.538 absFP 0.204
+  B cos        {"feat": "chorus_p90"}                   t=0.118  cgF1 13.3 IL_MCC 0.422 absFP 0.197
+  B sms        {"feat": "chorus_p90"}                   t=1.547  cgF1 16.3 IL_MCC 0.557 absFP 0.197
+best baseline on dev: ["sms", {"feat": "chorus"}]

@@ -1,0 +1,157 @@
+{
+ "image": true,
+ "train": [
+  "scannet:../downloads/runs/evidence3/scannet_train"
+ ],
+ "extra": [
+  "image_siglip2_ms"
+ ],
+ "ablate": [],
+ "dev": {
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.5|None": {
+   "cgF1": 22.465070025290803,
+   "pmF1": 0.4154250657318142,
+   "IL_MCC": 0.5407730991320001,
+   "absFP": 0.0065894924309884235,
+   "cntMAE": 0.10397904044539054,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|ef1|None": {
+   "cgF1": 26.577551612778787,
+   "pmF1": 0.4573643410852713,
+   "IL_MCC": 0.5811023996692312,
+   "absFP": 0.008548530721282279,
+   "cntMAE": 0.10447028000654986,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.3|None": {
+   "cgF1": 27.995932652889476,
+   "pmF1": 0.4875,
+   "IL_MCC": 0.5742755415977329,
+   "absFP": 0.015494211932324132,
+   "cntMAE": 0.10725397085311937,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.2|None": {
+   "cgF1": 30.12312077820853,
+   "pmF1": 0.5125268432355047,
+   "IL_MCC": 0.5877374263569457,
+   "absFP": 0.026714158504007122,
+   "cntMAE": 0.12035369248403471,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.1|None": {
+   "cgF1": 30.986671542271544,
+   "pmF1": 0.5242718446601942,
+   "IL_MCC": 0.5910420683062906,
+   "absFP": 0.04755120213713268,
+   "cntMAE": 0.15850663173407564,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|ef1|drop": {
+   "cgF1": 26.451449437758818,
+   "pmF1": 0.45519429024583663,
+   "IL_MCC": 0.5811023996692312,
+   "absFP": 0.008548530721282279,
+   "cntMAE": 0.10152284263959391,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|ef1|host": {
+   "cgF1": 26.124222256774015,
+   "pmF1": 0.4495631453534551,
+   "IL_MCC": 0.5811023996692312,
+   "absFP": 0.008548530721282279,
+   "cntMAE": 0.10119534959882102,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.2|drop": {
+   "cgF1": 30.20918435914198,
+   "pmF1": 0.5139911634756995,
+   "IL_MCC": 0.5877374263569457,
+   "absFP": 0.026714158504007122,
+   "cntMAE": 0.11445881775012282,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|logreg|0.2|host": {
+   "cgF1": 29.906992934092372,
+   "pmF1": 0.5088495575221239,
+   "IL_MCC": 0.5877374263569457,
+   "absFP": 0.026714158504007122,
+   "cntMAE": 0.11413132470934993,
+   "EcntMAE": 0.1219024316647071
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.5|None": {
+   "cgF1": 20.462689665049584,
+   "pmF1": 0.38176197836166925,
+   "IL_MCC": 0.5360064863678979,
+   "absFP": 0.022617987533392697,
+   "cntMAE": 0.12379236941215,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|ef1|None": {
+   "cgF1": 21.840599002698283,
+   "pmF1": 0.39285714285714285,
+   "IL_MCC": 0.5559425200686836,
+   "absFP": 0.02350845948352627,
+   "cntMAE": 0.1296872441460619,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.3|None": {
+   "cgF1": 21.336153419026648,
+   "pmF1": 0.3864864864864865,
+   "IL_MCC": 0.5520543192335566,
+   "absFP": 0.026357969723953694,
+   "cntMAE": 0.13983952841002129,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.2|None": {
+   "cgF1": 22.722417537247846,
+   "pmF1": 0.3997469955724225,
+   "IL_MCC": 0.568419970354254,
+   "absFP": 0.03223508459483526,
+   "cntMAE": 0.15064679875552645,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.1|None": {
+   "cgF1": 22.621294517225017,
+   "pmF1": 0.39611178614823817,
+   "IL_MCC": 0.5710836008489629,
+   "absFP": 0.03686553873552983,
+   "cntMAE": 0.16194530866219092,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|ef1|drop": {
+   "cgF1": 21.784200713543463,
+   "pmF1": 0.39184268026219954,
+   "IL_MCC": 0.5559425200686836,
+   "absFP": 0.02350845948352627,
+   "cntMAE": 0.12477484853446864,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|ef1|host": {
+   "cgF1": 21.701265037768792,
+   "pmF1": 0.39035087719298245,
+   "IL_MCC": 0.5559425200686836,
+   "absFP": 0.02350845948352627,
+   "cntMAE": 0.12428360897330931,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.2|drop": {
+   "cgF1": 23.00569656624313,
+   "pmF1": 0.40473061760841,
+   "IL_MCC": 0.568419970354254,
+   "absFP": 0.03223508459483526,
+   "cntMAE": 0.1406582610119535,
+   "EcntMAE": 0.19832413306663496
+  },
+  "scannet:../downloads/runs/evidence3/scannet_dev|gbm|0.2|host": {
+   "cgF1": 22.796790367769553,
+   "pmF1": 0.40105540897097625,
+   "IL_MCC": 0.568419970354254,
+   "absFP": 0.03223508459483526,
+   "cntMAE": 0.13967578188963484,
+   "EcntMAE": 0.19832413306663496
+  }
+ },
+ "test": {}
+}

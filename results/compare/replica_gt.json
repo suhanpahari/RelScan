@@ -1,0 +1,248 @@
+{
+ "args": {
+  "bench": "replica",
+  "snap_ckpt": "../downloads/ckpt/SNAP_C.pth",
+  "openscene_ckpt": "../downloads/ckpt/matterport_openseg.pth.tar",
+  "feature": "openseg",
+  "dense_voxel": 0.02,
+  "proposals": "gt",
+  "c2f_v0": 0.8,
+  "c2f_levels": 3,
+  "max_dist": 0.05,
+  "gpus": "MIG-79bd4bd1-7b07-5a71-aa77-3afd7b2e20dc",
+  "procs_per_gpu": 1,
+  "limit": 0,
+  "out": "results/compare/replica_gt.json",
+  "num_prompts": 400,
+  "iou_thresh": 0.3,
+  "stability_thresh": 0.5,
+  "nms_thresh": 0.5,
+  "min_points": 30,
+  "tau": 0.01,
+  "alpha": 0.7,
+  "beta": 0.3,
+  "relay_tau": 0.05,
+  "relay_weight": 0.8,
+  "dense_collapse": 0.75,
+  "image_weight": 0.5,
+  "images": 1,
+  "dump": "../downloads/runs/dump_replica_gt",
+  "oracle_scale": 0,
+  "lift2d": "",
+  "lift_step": 20,
+  "frame_step": 10
+ },
+ "n_scenes": 8,
+ "expected_scenes": 8,
+ "complete": true,
+ "sec_per_scene": 30.19641289114952,
+ "results": {
+  "all": {
+   "opensnap": {
+    "semantic": {
+     "mIoU": 0.18809541693536103,
+     "mAcc": 0.281074799097067
+    },
+    "semantic_observed": {
+     "mIoU": 0.18809541693536103,
+     "mAcc": 0.281074799097067,
+     "observed_fraction": 1.0
+    },
+    "inst48_p_x_iou": {
+     "AP": 0.17362938181799503,
+     "AP50": 0.17362938181799503,
+     "AP25": 0.17362938181799503,
+     "per_class_AP": {
+      "basket": 0.0,
+      "bed": 0.0,
+      "bench": 0.0,
+      "bin": 1.0,
+      "blanket": 0.0,
+      "blinds": 0.04,
+      "book": 0.0,
+      "bottle": 0.0,
+      "box": 0.0,
+      "bowl": 0.0,
+      "camera": 0.0,
+      "cabinet": 0.6130952380952381,
+      "candle": 0.0,
+      "chair": 0.8947368421052632,
+      "clock": 0.0,
+      "cloth": 0.0,
+      "comforter": 0.0,
+      "cushion": 0.7022795335230836,
+      "desk": 0.0,
+      "desk organizer": 0.0,
+      "door": 0.4745879120879121,
+      "indoor plant": 0.4,
+      "lamp": 0.1111111111111111,
+      "monitor": 0.0,
+      "nightstand": 0.0,
+      "panel": 0.0,
+      "picture": 1.0,
+      "pillar": 0.0,
+      "pillow": 0.0,
+      "pipe": 0.0,
+      "plant stand": 0.0,
+      "plate": 0.0,
+      "pot": 0.25,
+      "sculpture": 0.0,
+      "shelf": 1.0,
+      "sofa": 0.8893849206349207,
+      "stool": 0.4,
+      "switch": 0.0,
+      "table": 0.4965147697062331,
+      "tablet": 0.0,
+      "tissue paper": 0.0,
+      "tv screen": 0.05555555555555555,
+      "tv stand": 0.0,
+      "vase": 0.0,
+      "vent": 0.0,
+      "wall plug": 0.0,
+      "window": 0.006944444444444444,
+      "rug": 0.0
+     }
+    },
+    "inst48_p": {
+     "AP": 0.17362938181799503,
+     "AP50": 0.17362938181799503,
+     "AP25": 0.17362938181799503,
+     "per_class_AP": {
+      "basket": 0.0,
+      "bed": 0.0,
+      "bench": 0.0,
+      "bin": 1.0,
+      "blanket": 0.0,
+      "blinds": 0.04,
+      "book": 0.0,
+      "bottle": 0.0,
+      "box": 0.0,
+      "bowl": 0.0,
+      "camera": 0.0,
+      "cabinet": 0.6130952380952381,
+      "candle": 0.0,
+      "chair": 0.8947368421052632,
+      "clock": 0.0,
+      "cloth": 0.0,
+      "comforter": 0.0,
+      "cushion": 0.7022795335230836,
+      "desk": 0.0,
+      "desk organizer": 0.0,
+      "door": 0.4745879120879121,
+      "indoor plant": 0.4,
+      "lamp": 0.1111111111111111,
+      "monitor": 0.0,
+      "nightstand": 0.0,
+      "panel": 0.0,
+      "picture": 1.0,
+      "pillar": 0.0,
+      "pillow": 0.0,
+      "pipe": 0.0,
+      "plant stand": 0.0,
+      "plate": 0.0,
+      "pot": 0.25,
+      "sculpture": 0.0,
+      "shelf": 1.0,
+      "sofa": 0.8893849206349207,
+      "stool": 0.4,
+      "switch": 0.0,
+      "table": 0.4965147697062331,
+      "tablet": 0.0,
+      "tissue paper": 0.0,
+      "tv screen": 0.05555555555555555,
+      "tv stand": 0.0,
+      "vase": 0.0,
+      "vent": 0.0,
+      "wall plug": 0.0,
+      "window": 0.006944444444444444,
+      "rug": 0.0
+     }
+    }
+   },
+   "dense_only": {
+    "semantic": {
+     "mIoU": 0.1971947169272814,
+     "mAcc": 0.28450275153063503
+    },
+    "semantic_observed": {
+     "mIoU": 0.1971947169272814,
+     "mAcc": 0.28450275153063503,
+     "observed_fraction": 1.0
+    },
+    "inst48_p_x_iou": {
+     "AP": 0.16799127458393603,
+     "AP50": 0.16799127458393606,
+     "AP25": 0.16799127458393606
+    },
+    "inst48_p": {
+     "AP": 0.16799127458393603,
+     "AP50": 0.16799127458393606,
+     "AP25": 0.16799127458393606
+    }
+   },
+   "token_only": {
+    "semantic": {
+     "mIoU": 0.15543382750237938,
+     "mAcc": 0.22693209559475896
+    },
+    "semantic_observed": {
+     "mIoU": 0.15543382750237938,
+     "mAcc": 0.22693209559475896,
+     "observed_fraction": 1.0
+    },
+    "inst48_p_x_iou": {
+     "AP": 0.11664548392512201,
+     "AP50": 0.11716027136081648,
+     "AP25": 0.11716027136081648
+    },
+    "inst48_p": {
+     "AP": 0.11664548392512201,
+     "AP50": 0.11716027136081648,
+     "AP25": 0.11716027136081648
+    }
+   },
+   "opensnap+image": {
+    "semantic": {
+     "mIoU": 0.21450518613473257,
+     "mAcc": 0.316278058648604
+    },
+    "semantic_observed": {
+     "mIoU": 0.21450518613473257,
+     "mAcc": 0.316278058648604,
+     "observed_fraction": 1.0
+    },
+    "inst48_p_x_iou": {
+     "AP": 0.25984456088471314,
+     "AP50": 0.26018478939334444,
+     "AP25": 0.26018478939334444
+    },
+    "inst48_p": {
+     "AP": 0.25984456088471314,
+     "AP50": 0.26018478939334444,
+     "AP25": 0.26018478939334444
+    }
+   },
+   "image_only": {
+    "semantic": {
+     "mIoU": 0.34057284328686444,
+     "mAcc": 0.5113461040531837
+    },
+    "semantic_observed": {
+     "mIoU": 0.34057284328686444,
+     "mAcc": 0.5113461040531837,
+     "observed_fraction": 1.0
+    },
+    "inst48_p_x_iou": {
+     "AP": 0.43923275590536864,
+     "AP50": 0.44244456146092426,
+     "AP25": 0.44244456146092426
+    },
+    "inst48_p": {
+     "AP": 0.43923275590536864,
+     "AP50": 0.44244456146092426,
+     "AP25": 0.44244456146092426
+    }
+   }
+  }
+ }
+}

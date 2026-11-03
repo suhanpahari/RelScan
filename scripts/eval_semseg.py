@@ -134,7 +134,7 @@ def main():
     for p in procs:
         p.join()
 
-    seen = set(snap_train_vocab()) if args.dataset.startswith("matterport") or args.dataset == "underonefacade" else None
+    seen = set(snap_train_vocab()) if args.dataset.startswith("matterport") or args.dataset in ("underonefacade", "arch") else None
     results = {m: summarize(conf[m], labels, seen) for m in args.methods}
     report = dict(args=vars(args), num_scenes=len(stats),
                   mean_masks=float(np.mean([s["masks"] for s in stats])),

@@ -1,0 +1,22 @@
+dev: 44 scenes, 396 queries (137 absent)
+  B cos        {"feat": "dense"}                        t=0.092  cgF1 12.7 IL_MCC 0.410 absFP 0.066
+  B sms        {"feat": "dense"}                        t=1.456  cgF1 12.0 IL_MCC 0.444 absFP 0.263
+  B label      {"image_w": 0.0}                         t=0.950  cgF1 15.7 IL_MCC 0.529 absFP 0.058
+  B ovql       {"image_w": 0.0}                         t=0.050  cgF1 15.0 IL_MCC 0.488 absFP 0.036
+  C ovql       {"hood": "text:clip_l:0.95", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 3.0 IL_MCC 0.289 absFP 0.007
+  C ovql       {"hood": "text:clip_l:0.95", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 3.1 IL_MCC 0.301 absFP 0.000
+  C ovql       {"hood": "text:clip_l:0.92", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 16.3 IL_MCC 0.433 absFP 0.022
+  C ovql       {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 16.6 IL_MCC 0.431 absFP 0.007
+  C ovql       {"hood": "text:clip_l:0.9", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 15.7 IL_MCC 0.427 absFP 0.029
+  C ovql       {"hood": "text:clip_l:0.9", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 16.6 IL_MCC 0.436 absFP 0.007
+  C ovql       {"hood": "text:siglip:0.9", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 7.4 IL_MCC 0.377 absFP 0.022
+  C ovql       {"hood": "text:siglip:0.9", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 3.1 IL_MCC 0.301 absFP 0.000
+  C ovql       {"hood": "text:siglip:0.85", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 4.7 IL_MCC 0.275 absFP 0.321
+  C ovql       {"hood": "text:siglip:0.85", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 4.4 IL_MCC 0.338 absFP 0.022
+  C ovql       {"hood": "wn_syn", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 2.4 IL_MCC 0.249 absFP 0.088
+  C ovql       {"hood": "wn_syn", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 3.1 IL_MCC 0.301 absFP 0.000
+  C ovql       {"hood": "wn_hyp", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 15.4 IL_MCC 0.439 absFP 0.007
+  C ovql       {"hood": "wn_hyp", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 15.7 IL_MCC 0.422 absFP 0.007
+  C ovql       {"hood": "wn_hyp+text:clip_l:0.92", "mode": "sum", "image_w": 0.0} p>0.5    cgF1 15.4 IL_MCC 0.433 absFP 0.022
+  C ovql       {"hood": "wn_hyp+text:clip_l:0.92", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 15.9 IL_MCC 0.422 absFP 0.015
+chosen on dev: candidate ["ovql", {"hood": "text:clip_l:0.9", "mode": "excl", "image_w": 0.0}] vs baseline ["label", {"image_w": 0.0}]

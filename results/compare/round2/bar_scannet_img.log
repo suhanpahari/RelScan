@@ -1,0 +1,11 @@
+dev: 31 scenes, 6107 queries (5615 absent)
+  B cos        {"feat": "image"}                        t=0.111  cgF1 11.5 IL_MCC 0.386 absFP 0.201
+  B cos        {"feat": "dense"}                        t=0.104  cgF1 5.0 IL_MCC 0.261 absFP 0.108
+  B sms        {"feat": "image"}                        t=2.059  cgF1 15.7 IL_MCC 0.438 absFP 0.049
+  B sms        {"feat": "dense"}                        t=1.277  cgF1 1.9 IL_MCC 0.163 absFP 0.052
+  B label      {"image_w": 0.5}                         t=0.300  cgF1 12.6 IL_MCC 0.422 absFP 0.033
+  B label      {"image_w": 0.75}                        t=0.150  cgF1 18.9 IL_MCC 0.495 absFP 0.037
+  B ovql       {"image_w": 0.5}                         t=0.200  cgF1 17.4 IL_MCC 0.477 absFP 0.041
+  B ovql       {"image_w": 0.75}                        t=0.200  cgF1 21.7 IL_MCC 0.507 absFP 0.029
+  C ovql       {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 4.0, "fuse": "bayes"} p>0.5    cgF1 20.1 IL_MCC 0.518 absFP 0.057
+chosen on dev: candidate ["ovql", {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 4.0, "fuse": "bayes"}] vs baseline ["ovql", {"image_w": 0.75}]

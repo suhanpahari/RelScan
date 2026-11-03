@@ -1,0 +1,86 @@
+[2026-11-03 11:36:34,066] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[1/312] scene0011_00 objs=86 points=237360
+[2/312] scene0011_01 objs=67 points=239261
+[3/312] scene0015_00 objs=72 points=217086
+[4/312] scene0019_00 objs=55 points=136769
+[5/312] scene0019_01 objs=53 points=165356
+[6/312] scene0025_00 objs=139 points=173392
+[7/312] scene0025_01 objs=126 points=165720
+[8/312] scene0025_02 objs=129 points=177900
+[9/312] scene0030_00 objs=166 points=293811
+[10/312] scene0030_01 objs=144 points=284801
+[11/312] scene0030_02 objs=148 points=284243
+[12/312] scene0046_00 objs=116 points=186857
+[13/312] scene0046_01 objs=128 points=198471
+[14/312] scene0046_02 objs=134 points=199774
+[15/312] scene0050_00 objs=108 points=211406
+[16/312] scene0050_01 objs=127 points=199034
+[17/312] scene0050_02 objs=120 points=196815
+[18/312] scene0063_00 objs=48 points=76966
+[19/312] scene0064_00 objs=94 points=230672
+[20/312] scene0064_01 objs=105 points=195252
+[21/312] scene0077_00 objs=54 points=92807
+[22/312] scene0077_01 objs=61 points=90381
+[23/312] scene0081_00 objs=12 points=51381
+[24/312] scene0081_01 objs=57 points=179955
+[25/312] scene0081_02 objs=49 points=153929
+[26/312] scene0084_00 objs=80 points=116845
+[27/312] scene0084_01 objs=77 points=111833
+[28/312] scene0084_02 objs=62 points=98346
+[29/312] scene0086_00 objs=54 points=124572
+[30/312] scene0086_01 objs=51 points=124210
+[31/312] scene0086_02 objs=48 points=124091
+[32/312] scene0088_00 objs=72 points=166872
+[33/312] scene0088_01 objs=64 points=145650
+[34/312] scene0088_02 objs=87 points=170685
+[35/312] scene0088_03 objs=48 points=136812
+[36/312] scene0095_00 objs=117 points=214895
+[37/312] scene0095_01 objs=82 points=216254
+[38/312] scene0100_00 objs=43 points=52304
+[39/312] scene0100_01 objs=49 points=51211
+[40/312] scene0100_02 objs=49 points=50328
+[41/312] scene0131_00 objs=82 points=177091
+[42/312] scene0131_01 objs=99 points=172221
+[43/312] scene0131_02 objs=71 points=140599
+[44/312] scene0139_00 objs=49 points=72007
+[45/312] scene0144_00 objs=129 points=126879
+[46/312] scene0144_01 objs=120 points=116341
+[47/312] scene0146_00 objs=36 points=60438
+[48/312] scene0146_01 objs=30 points=59330
+[49/312] scene0146_02 objs=31 points=64383
+[50/312] scene0149_00 objs=140 points=162396
+[51/312] scene0153_00 objs=41 points=47709
+[52/312] scene0153_01 objs=40 points=49553
+[53/312] scene0164_00 objs=115 points=94315
+[54/312] scene0164_01 objs=109 points=88073
+[55/312] scene0164_02 objs=93 points=92825
+[56/312] scene0164_03 objs=93 points=89190
+[57/312] scene0169_00 objs=84 points=239354
+[58/312] scene0169_01 objs=85 points=228074
+[59/312] scene0187_00 objs=25 points=173752
+[60/312] scene0187_01 objs=28 points=144163
+[61/312] scene0193_00 objs=28 points=101783
+[62/312] scene0193_01 objs=25 points=93668
+[63/312] scene0196_00 objs=49 points=146032
+[64/312] scene0203_00 objs=134 points=205756
+[65/312] scene0203_01 objs=130 points=206210
+[66/312] scene0203_02 objs=169 points=238392
+[67/312] scene0207_00 objs=264 points=304396
+[68/312] scene0207_01 objs=266 points=269274
+OOM on scene0207_02, retry 1/10 in 180 s
+OOM on scene0207_02, retry 2/10 in 180 s
+OOM on scene0207_02, retry 3/10 in 180 s
+OOM on scene0207_02, retry 4/10 in 180 s
+OOM on scene0207_02, retry 5/10 in 180 s
+OOM on scene0207_02, retry 6/10 in 180 s
+OOM on scene0207_02, retry 7/10 in 180 s
+OOM on scene0207_02, retry 8/10 in 180 s
+OOM on scene0207_02, retry 9/10 in 180 s
+OOM on scene0207_02, retry 10/10 in 180 s
+Traceback (most recent call last):
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_expert.py", line 141, in <module>
+    main()
+  File "/media/bigdata/71ec9ff9-bdc2-410a-bfcb-1a3e24aaf8f7/soham/opensnap/opensnap/scripts/chorus_expert.py", line 114, in main
+    raise RuntimeError(f"persistent OOM on {rec['scene']}")
+RuntimeError: persistent OOM on scene0207_02

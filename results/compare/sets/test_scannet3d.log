@@ -1,0 +1,14 @@
+dev: 31 scenes, 6107 queries (5615 absent)
+  B cos        {"feat": "dense"}                        t=0.104  cgF1 5.0 IL_MCC 0.261 absFP 0.108
+  B sms        {"feat": "dense"}                        t=1.277  cgF1 1.9 IL_MCC 0.163 absFP 0.052
+  B label      {"image_w": 0.0}                         t=0.450  cgF1 8.4 IL_MCC 0.339 absFP 0.041
+  B ovql       {"image_w": 0.0}                         t=0.400  cgF1 10.0 IL_MCC 0.385 absFP 0.034
+  C ovql       {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0} p>0.5    cgF1 13.4 IL_MCC 0.406 absFP 0.032
+chosen on dev: candidate ["ovql", {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0}] vs baseline ["ovql", {"image_w": 0.0}]
+test: 312 scenes, 61464 queries (57286 absent)
+  C ["ovql", {"hood": "text:clip_l:0.92", "mode": "excl", "image_w": 0.0}]   cgF1 13.1 IL_MCC 0.378 pmF1 0.347 absFP 0.037
+  B ["ovql", {"image_w": 0.0}]                                               cgF1 7.3 IL_MCC 0.337 pmF1 0.217 absFP 0.039
+  B ["label", {"image_w": 0.0}]                                              cgF1 6.6 IL_MCC 0.307 pmF1 0.214 absFP 0.047
+  B ["cos", {"feat": "dense"}]                                               cgF1 5.1 IL_MCC 0.248 pmF1 0.206 absFP 0.116
+  B ["sms", {"feat": "dense"}]                                               cgF1 1.5 IL_MCC 0.143 pmF1 0.101 absFP 0.058
+TEST chosen - bar: cgF1 +5.8 [+4.9, +6.7]  AP +0.4

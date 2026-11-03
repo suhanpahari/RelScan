@@ -1,0 +1,34 @@
+[2026-11-03 07:39:24,745] INFO - Resolved Hugging Face checkpoint lang-dino-enc-pretrain-ppv2-mcmc-from-pts-params.pth from SceneSplatPro/Chorus@main
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[1/31] scene0000_00 objs=183 points=81369
+[2/31] scene0022_00 objs=84 points=180013
+[3/31] scene0043_00 objs=28 points=130427
+[4/31] scene0065_01 objs=26 points=49044
+[5/31] scene0089_01 objs=46 points=112120
+[6/31] scene0109_00 objs=75 points=102001
+[7/31] scene0126_00 objs=116 points=206075
+[8/31] scene0151_00 objs=112 points=357321
+[9/31] scene0171_00 objs=35 points=132529
+[10/31] scene0195_01 objs=66 points=82894
+[11/31] scene0215_01 objs=74 points=200269
+[12/31] scene0241_02 objs=95 points=122654
+[13/31] scene0265_00 objs=39 points=42596
+[14/31] scene0286_00 objs=130 points=203540
+[15/31] scene0305_01 objs=168 points=202800
+[16/31] scene0332_02 objs=33 points=97832
+[17/31] scene0359_01 objs=25 points=58646
+[18/31] scene0380_01 objs=79 points=164540
+[19/31] scene0400_00 objs=30 points=155959
+[20/31] scene0421_00 objs=227 points=127533
+[21/31] scene0449_00 objs=50 points=48445
+[22/31] scene0470_01 objs=25 points=78558
+[23/31] scene0492_01 objs=61 points=132237
+[24/31] scene0515_01 objs=215 points=311506
+[25/31] scene0539_00 objs=70 points=75012
+[26/31] scene0567_00 objs=61 points=237936
+[27/31] scene0588_01 objs=84 points=334936
+[28/31] scene0614_00 objs=100 points=205589
+[29/31] scene0638_00 objs=9 points=119727
+[30/31] scene0673_00 objs=152 points=254321
+[31/31] scene0706_00 objs=97 points=137070
+CHORUS_DONE

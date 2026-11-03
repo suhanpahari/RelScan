@@ -1,0 +1,22 @@
+train rows 1942223, positives 2718, features 30
+DEV scannet  logreg 0.5  None  cgF1  22.0 IL_MCC 0.539 pmF1 0.408 absFP 0.006
+DEV scannet  logreg ef1  None  cgF1  26.0 IL_MCC 0.574 pmF1 0.454 absFP 0.009
+DEV scannet  logreg 0.3  None  cgF1  28.1 IL_MCC 0.591 pmF1 0.475 absFP 0.014
+DEV scannet  logreg 0.2  None  cgF1  30.5 IL_MCC 0.602 pmF1 0.506 absFP 0.024
+DEV scannet  logreg 0.1  None  cgF1  30.4 IL_MCC 0.598 pmF1 0.508 absFP 0.045
+DEV scannet  logreg ef1  drop  cgF1  25.9 IL_MCC 0.574 pmF1 0.451 absFP 0.009
+DEV scannet  logreg ef1  host  cgF1  25.7 IL_MCC 0.574 pmF1 0.448 absFP 0.009
+DEV scannet  logreg 0.2  drop  cgF1  30.5 IL_MCC 0.602 pmF1 0.506 absFP 0.024
+DEV scannet  logreg 0.2  host  cgF1  30.0 IL_MCC 0.602 pmF1 0.498 absFP 0.024
+DEV scannet  gbm    0.5  None  cgF1  13.7 IL_MCC 0.476 pmF1 0.288 absFP 0.021
+DEV scannet  gbm    ef1  None  cgF1  14.1 IL_MCC 0.477 pmF1 0.295 absFP 0.023
+DEV scannet  gbm    0.3  None  cgF1  14.7 IL_MCC 0.477 pmF1 0.309 absFP 0.030
+DEV scannet  gbm    0.2  None  cgF1  15.2 IL_MCC 0.481 pmF1 0.316 absFP 0.033
+DEV scannet  gbm    0.1  None  cgF1  16.3 IL_MCC 0.491 pmF1 0.332 absFP 0.046
+DEV scannet  gbm    ef1  drop  cgF1  14.0 IL_MCC 0.477 pmF1 0.294 absFP 0.023
+DEV scannet  gbm    ef1  host  cgF1  13.9 IL_MCC 0.477 pmF1 0.291 absFP 0.023
+DEV scannet  gbm    0.2  drop  cgF1  15.1 IL_MCC 0.481 pmF1 0.314 absFP 0.033
+DEV scannet  gbm    0.2  host  cgF1  15.1 IL_MCC 0.481 pmF1 0.314 absFP 0.033
+TEST replica:../downloads/runs/evidence2/replica {'model': 'logreg', 'rule': 0.2, 'post': None} cgF1 13.2 IL_MCC 0.383 pmF1 0.344 absFP 0.037
+TEST bar ["ovql", {"image_w": 0.75}, 0.20] cgF1 14.9 absFP 0.047 | head - bar: cgF1 -1.7 [-6.7, +2.6]  AP 32.4 vs 32.1
+EXPLORE_DONE

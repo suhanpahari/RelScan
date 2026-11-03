@@ -1,0 +1,21 @@
+train rows 1942223, positives 2718, features 24
+DEV s3dis    logreg 0.5  None  cgF1  13.4 IL_MCC 0.325 pmF1 0.411 absFP 0.000
+DEV s3dis    logreg ef1  None  cgF1  18.0 IL_MCC 0.409 pmF1 0.440 absFP 0.000
+DEV s3dis    logreg 0.3  None  cgF1  19.2 IL_MCC 0.440 pmF1 0.436 absFP 0.000
+DEV s3dis    logreg 0.2  None  cgF1  19.9 IL_MCC 0.462 pmF1 0.431 absFP 0.015
+DEV s3dis    logreg 0.1  None  cgF1  19.8 IL_MCC 0.489 pmF1 0.405 absFP 0.022
+DEV s3dis    logreg ef1  drop  cgF1  18.0 IL_MCC 0.409 pmF1 0.440 absFP 0.000
+DEV s3dis    logreg ef1  host  cgF1  18.3 IL_MCC 0.409 pmF1 0.447 absFP 0.000
+DEV s3dis    logreg 0.2  drop  cgF1  20.0 IL_MCC 0.462 pmF1 0.433 absFP 0.015
+DEV s3dis    logreg 0.2  host  cgF1  20.4 IL_MCC 0.462 pmF1 0.441 absFP 0.015
+DEV s3dis    gbm    0.5  None  cgF1  13.9 IL_MCC 0.421 pmF1 0.331 absFP 0.022
+DEV s3dis    gbm    ef1  None  cgF1  14.1 IL_MCC 0.430 pmF1 0.327 absFP 0.022
+DEV s3dis    gbm    0.3  None  cgF1  14.1 IL_MCC 0.430 pmF1 0.329 absFP 0.022
+DEV s3dis    gbm    0.2  None  cgF1  14.2 IL_MCC 0.433 pmF1 0.327 absFP 0.022
+DEV s3dis    gbm    0.1  None  cgF1  14.8 IL_MCC 0.439 pmF1 0.338 absFP 0.029
+DEV s3dis    gbm    ef1  drop  cgF1  14.4 IL_MCC 0.430 pmF1 0.334 absFP 0.022
+DEV s3dis    gbm    ef1  host  cgF1  15.2 IL_MCC 0.430 pmF1 0.354 absFP 0.022
+DEV s3dis    gbm    0.2  drop  cgF1  14.5 IL_MCC 0.433 pmF1 0.334 absFP 0.022
+DEV s3dis    gbm    0.2  host  cgF1  15.3 IL_MCC 0.433 pmF1 0.353 absFP 0.022
+TEST s3dis:../downloads/runs/evidence2/s3dis_a5 {'model': 'logreg', 'rule': 0.2, 'post': None} cgF1 26.8 IL_MCC 0.557 pmF1 0.482 absFP 0.028
+TEST bar ["label", {"image_w": 0.0}, 0.95] cgF1 17.0 absFP 0.143 | head - bar: cgF1 +9.8 [+6.6, +13.0]  AP 15.4 vs 10.4

@@ -1,0 +1,22 @@
+dev: 31 scenes, 6107 queries (5615 absent)
+  B cos        {"feat": "image"}                        t=0.112  cgF1 11.7 IL_MCC 0.390 absFP 0.197
+  B cos        {"feat": "dense"}                        t=0.104  cgF1 5.0 IL_MCC 0.261 absFP 0.108
+  B sms        {"feat": "image"}                        t=1.988  cgF1 15.7 IL_MCC 0.439 absFP 0.053
+  B sms        {"feat": "dense"}                        t=1.286  cgF1 1.9 IL_MCC 0.163 absFP 0.052
+  B label      {"image_w": 0.5}                         t=0.300  cgF1 12.6 IL_MCC 0.420 absFP 0.033
+  B label      {"image_w": 0.75}                        t=0.150  cgF1 18.9 IL_MCC 0.492 absFP 0.037
+  B ovql       {"image_w": 0.5}                         t=0.250  cgF1 17.4 IL_MCC 0.474 absFP 0.035
+  B ovql       {"image_w": 0.75}                        t=0.200  cgF1 21.8 IL_MCC 0.506 absFP 0.029
+  B cos        {"feat": "dense_p90"}                    t=0.121  cgF1 5.2 IL_MCC 0.259 absFP 0.114
+  B sms        {"feat": "dense_p90"}                    t=1.288  cgF1 1.9 IL_MCC 0.166 absFP 0.052
+  B cos        {"feat": "chorus"}                       t=0.091  cgF1 5.3 IL_MCC 0.268 absFP 0.204
+  B sms        {"feat": "chorus"}                       t=1.557  cgF1 10.3 IL_MCC 0.365 absFP 0.032
+  B cos        {"feat": "chorus_p90"}                   t=0.098  cgF1 6.3 IL_MCC 0.275 absFP 0.227
+  B sms        {"feat": "chorus_p90"}                   t=1.540  cgF1 11.3 IL_MCC 0.386 absFP 0.040
+  B cos        {"feat": "image_siglip2_ms"}             t=0.097  cgF1 11.2 IL_MCC 0.404 absFP 0.153
+  B sms        {"feat": "image_siglip2_ms"}             t=2.090  cgF1 14.1 IL_MCC 0.426 absFP 0.047
+  B cos        {"feat": "image_siglip2_lm"}             t=0.118  cgF1 15.1 IL_MCC 0.459 absFP 0.032
+  B sms        {"feat": "image_siglip2_lm"}             t=1.666  cgF1 17.6 IL_MCC 0.471 absFP 0.050
+  B cos        {"feat": "image_so400m_lm"}              t=0.133  cgF1 12.2 IL_MCC 0.426 absFP 0.019
+  B sms        {"feat": "image_so400m_lm"}              t=1.663  cgF1 16.2 IL_MCC 0.437 absFP 0.058
+best baseline on dev: ["ovql", {"image_w": 0.75}]
