@@ -1,6 +1,10 @@
 # RelScan: Open-Vocabulary Object Relations for 3D Scans with Query-Time Semantic Cracking
 
-**Project page:** [sohamrsch.github.io/relscan](https://sohamrsch.github.io/relscan/)
+<p align="center">
+  <a href="https://huggingface.co/suhanxvii/opensnap-weights"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Weights-ffcc00"></a>
+  <a href="https://sohamrsch.github.io/relscan/"><img alt="Website" src="https://img.shields.io/badge/Project-Website-1f6feb?logo=googlechrome&logoColor=white"></a>
+  <a href=""><img alt="arXiv" src="https://img.shields.io/badge/arXiv-paper-b31b1b?logo=arxiv&logoColor=white"></a>
+</p>
 
 <p align="center">
   <img src="assets/video/opensnap_explainer.gif" width="85%" alt="RelScan overview">
